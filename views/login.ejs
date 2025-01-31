@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API port Russell</title>
+</head>
+<body>
+    <h1>page de connection</h1>
+    <a href="/signup">s'inscrire</a>
+    <br>
+    <a href="/">retourner a l'acceuil</a>
+
+    <form action="/login" method="post" id="users">
+        <fieldset>
+            <legend>connexion</legend>
+            <label for="email">veuillez renseigner votre adresse mail :</label>
+            <input type="text" id="email" name="email">
+            <br>
+            <label for="login_password">mot de passe :</label>
+            <input type="password" id="password" name="password" autocomplete="current-password">
+            <br>
+            <input type="submit" value="se connecter">
+            <input type="reset" value="effacer">
+        </fieldset>
+    </form>
+</body>
