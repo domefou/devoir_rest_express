@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>adminMenu</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <ul>
+                <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
+                <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
+                <li class="navbar-li_center"><a href="/admin/reservation">Réservations</a></li>
+                <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
+            </ul>
+            <div class="identifiant">
+                <p><%= user.email %></p>
+                <p><%= user.name %></p>
+            </div>
+            <button id="logoutButton">Déconnexion</button>
+            
+            
+        </div>
+    </header>
+    <main>
+        
+        <h1>Menu admin</h1>
+    </main>
+    <footer>
+        
+    </footer>
+    <!-- Script pour gérer la déconnexion -->
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            window.location.href = '/logout'; // Redirige vers la route de déconnexion
+        });
+
+    </script>
+</body>
+</html>

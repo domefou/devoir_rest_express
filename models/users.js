@@ -25,8 +25,20 @@ const User = new Schema({
     password: {
         type : String,
         trim : true,
-        required : [true, 'Le mot de passe est obligatoire']
     },
+    role: {
+        type : String,
+        enum : ['user','admin'],
+        default : 'user'
+    },
+    question: { 
+        type: String,
+        required: true
+     },
+    response: { 
+        type: String,
+        required: true 
+    }
 },{
     //timestamps est un paramètre qui permet d'ajouter automatiquement les champs createdAt et updatedAt à un document.
     timestamps: true

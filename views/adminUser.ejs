@@ -8,15 +8,23 @@
 </head>
 <body>
     <header>
-        <div class="navbar_public">
+        <div class="navbar">
             <ul>
-                <li class="navbar-li_left"><a href="/">retourner a l'acceuil</a></li>
-                <li class="navbar-li_right"><a href="/login">se connecter</a></li>
+                <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
+                <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
+                <li class="navbar-li_center"><a href="/admin/reservation">Réservations</a></li>
+                <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
             </ul>
+            <div class="identifiant">
+                <p><%= user.email %></p>
+                <p><%= user.name %></p>
+            </div>
+            <button id="logoutButton">Déconnexion</button>
         </div>
     </header>
     <main>
-        <h1>page d'inscription</h1>
+        <h1>Données utilisateurs</h1>
+
         <form action="/signup" method="POST" id="form_signup">
             <fieldset>
                 <p>veuillez renseigner tout les champs.</p>
@@ -44,18 +52,21 @@
                         <input type="text" name="response" id="response" placeholder="votre réponse" required>
                 </div>
                 <div class="btn_submit_reset">
-                    <input type="submit" value="S'enregistrer" id="btn_submit">
-                    <input type="reset" value="effacer" id="btn_reset">
+                    <input type="submit" value="Réserver" id="btn_submit">
+                    <input type="reset" value="Effacer" id="btn_reset">
                 </div>
                 
             </fieldset>
         </form>
     </main>
     <footer>
-
+        
     </footer>
-    
-
-    
+    <!-- Script pour gérer la déconnexion -->
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            window.location.href = '/logout'; // Redirige vers la route de déconnexion
+        });
+    </script>
 </body>
 </html>

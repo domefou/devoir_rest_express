@@ -3,25 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <title>API port Russell</title>
 </head>
 <body>
-    <h1>page de connection</h1>
-    <a href="/signup">s'inscrire</a>
-    <br>
-    <a href="/">retourner a l'acceuil</a>
-
-    <form action="/login" method="post" id="users">
-        <fieldset>
-            <legend>connexion</legend>
-            <label for="email">veuillez renseigner votre adresse mail :</label>
-            <input type="text" id="email" name="email">
-            <br>
-            <label for="login_password">mot de passe :</label>
-            <input type="password" id="password" name="password" autocomplete="current-password">
-            <br>
-            <input type="submit" value="se connecter">
-            <input type="reset" value="effacer">
-        </fieldset>
-    </form>
+    <header>
+        <div class="navbar_public">
+            <ul>
+                <li class="navbar-li_left"><a href="/">retourner a l'acceuil</a></li>
+                <li class="navbar-li_right"><a href="/signup">s'inscrire</a></li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <h1>page de connection</h1>
+        <form action="/login" method="post">
+            <fieldset>
+                <legend>connexion</legend>
+                <label for="email">veuillez renseigner votre adresse mail :</label>
+                <input type="text" id="email" name="email" placeholder="adresse@mail.com" autocomplete="email" required>
+                <label for="password">mot de passe :</label>
+                <input type="password" id="password" name="password" placeholder="mot de passe" autocomplete="current-password" required>
+                <div class="btn_submit_reset">
+                    <input type="submit" id="btn_submit" value="se connecter">
+                    <input type="reset" id="btn_reset" value="effacer">
+                </div>
+                
+                <% if (errorMessage) { %>
+                <p style="color:red;"><%= errorMessage %></p>
+                <% } %>
+            </fieldset>
+            <a href="/reset">mot de passe oublié ?</a>
+        </form>
+        
+    </main>
+    <footer>
+        
+    </footer>
 </body>

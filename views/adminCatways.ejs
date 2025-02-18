@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>API port Russell</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <ul>
+                <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
+                <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
+                <li class="navbar-li_center"><a href="/admin/reservation">Réservations</a></li>
+                <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
+            </ul>
+            <div class="identifiant">
+                <p><%= user.email %></p>
+                <p><%= user.name %></p>
+            </div>
+            <button id="logoutButton">Déconnexion</button>
+        </div>
+    </header>
+    <main>
+        <h1>Données Catways</h1>
+
+        <form method="post" action="/admin/catways">
+            <fieldset>
+                <legend>etats des catway</legend>
+                <select id="select-catway" name="catwaysNumber">
+                    <option value="" disabled selected >Sélectionner l'emplacement</option>
+                </select>
+
+                <select id="select-type" name="catwaysType">
+                    <option value="" disabled selected>Sélectionner le type</option>
+                    <option value="long">long</option>
+                    <option value="short">short</option>
+                </select>
+
+                <label for="catways-state">etats du catways</label>
+                <input type="text" name="catwaysState" id="catways-state">
+
+                <div class="btn_submit_reset">
+                    <input type="submit" value="Ajouter" id="btn_submit">
+                    <input type="reset" value="Effacer" id="btn_reset">
+                </div>
+            </fieldset>
+        </form>
+    </main>
+    <footer>
+        
+    </footer>
+    <!-- Script pour gérer la déconnexion -->
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            window.location.href = '/logout'; // Redirige vers la route de déconnexion
+        });
+
+        const select = document.getElementById('select-catway');
+
+        for (let i = 1; i <= 13; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            select.appendChild(option);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>API port Russell</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <ul>
+                <li class="navbar-li_solo"><a href="/user/menu">Accueil</a></li>
+            </ul>
+            <div class="identifiant">
+                <p><%= user.email %></p>
+                <p><%= user.name %></p>
+            </div>
+            <button id="logoutButton" >Déconnexion</button>
+        </div>
+    </header>
+    <main>
+        <h1>Réservation utilisateur</h1>
+        <form method="post" action="/reservation">
+            <fieldset>
+                <legend>réservez un catway</legend>
+                <label for=""></label>
+                <select id="select-catway">
+                    <option value="" name="catwayNumber">Sélectionner l'emplacement</option>
+                </select>
+                <label for="name">nom :</label>
+                <input type="text" name="clientNameame" id="name">
+                <label for="boat">nom du bateau :</label>
+                <input type="text" name="boatName">
+                <label for="startDate">date d'arrivé</label>
+                <input type="date" name="startDate" id="startDate">
+                <label for="endDate">date de départ</label>
+                <input type="date" name="endDate" id="endDate">
+
+                <div class="btn_submit_reset">
+                    <input type="submit" value="Réserver" id="btn_submit">
+                    <input type="reset" value="Effacer" id="btn_reset">
+                </div>
+            </fieldset>
+        </form>
+    </main>
+    <footer>
+        
+    </footer>
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            window.location.href = '/logout'; // Redirige vers la route de déconnexion
+        });
+
+        const select = document.getElementById('select-catway');
+
+        for (let i = 1; i <= 13; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            select.appendChild(option);
+        }
+    </script>
+</body>
+</html>
