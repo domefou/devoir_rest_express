@@ -30,6 +30,7 @@
                 <input type="email" id="signup_email" name="email" id="signup_email" placeholder="adresse@mail.com" autocomplete="current-password" required>
                 <label for="current-password">mot de passe :</label>
                 <input type="password" name="password" id="current-password" placeholder="Password" autocomplete="current-password" required>
+                <small>* le mot de passe doit contenir au moins 8 caractères</small>
                 <div class="secret_question">
                     <small>* en cas de perte du mot de passe veuillez renseigner une question secrete</small>
                     <label for="signup_question">question secrete</label>
@@ -47,7 +48,10 @@
                     <input type="submit" value="S'enregistrer" id="btn_submit">
                     <input type="reset" value="effacer" id="btn_reset">
                 </div>
-                
+                <% if (errorMessage) { %>
+                    <p style="color:red;"><%= errorMessage %></p>
+                <% } %>
+                    
             </fieldset>
         </form>
     </main>

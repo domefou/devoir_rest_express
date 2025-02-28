@@ -8,6 +8,12 @@ const logger = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 
+const bodyParser = require('body-parser');
+//
+const methodOverride = require('method-override');
+
+
+
 //route public
 const publicRoutes = require('./routes/publicRoutes');
 //route securisé admin
@@ -27,6 +33,11 @@ mongodb.initClientDbConnection();
 // Création de l'application Express
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+//
+app.use(methodOverride('_method'));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -43,7 +54,10 @@ app.use(session({
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
+//
+app.use(express.urlencoded({ extended: true }));
+
+
 
 
 

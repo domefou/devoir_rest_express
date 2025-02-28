@@ -1,6 +1,8 @@
 const Catways = require('../models/catways');
 const bcrypt = require('bcrypt');
+const { render } = require('ejs');
 const jwt = require('jsonwebtoken');
+const User = require('../models/users')
 
 const { SECRET_KEY } = process.env;
 
@@ -8,79 +10,100 @@ const { SECRET_KEY } = process.env;
 
 
 //on crée une fonction qui va chercher un utilisateur par son id
-exports.catwaysGetById = async (req, res, next) => {
+exports.catwayGetById = async (req, res, next) => {
     const id = req.params.id;
 
     try {
-        let user = await Catways.findById(id);
-
-        if (user) {
-            return res.status(200).json(user);
+        if(id){
+            
+        const catway = await Catways.findById(id);
+        console.log("METHOD catwayGetById = élément touvé" , catway );
         }
-        return res.status(404).json('Utilisateur introuvable');
-        } catch (error) {
-            return res.status(500).json(error);
+        else{
+            return res.status(404).json({message : "METHOD catwayGetById = utilisateur introuvable" , error});
+        }
+        }catch (error) {
+            return res.status(501).json({ message: "METHOD catwayGetById = serveur introuvable" , error });
         }
     };
 
 //on crée une fonction qui va ajouter un utilisateur
     exports.catwaysAdd = async (req, res, next) => {
-        const temp = ({
-            catwaysNumber: req.body.catwaysNumber,
-            catwaysType: req.body.catwaysType,
-            catwaysState: req.body.catwaysState
-        });
+
+        const { catwaysNumber, catwaysType, catwaysState } = req.body;
+        
+        const newNumber = req.body.catwaysNumber;
+
+        
+        const newCatway = new Catways({
+            catwaysNumber: catwaysNumber,
+            catwaysType: catwaysType,
+            catwaysState: catwaysState
+            });
 
         try {
-            let user = await Catways.create(temp);
-            console.log("creation reussi" + user);
+            const existingCatway = await Catways.findOne({ catwaysNumber: catwaysNumber });
+
+            if(existingCatway){
+                const catways = await Catways.find({});
+                const user = req.decoded;
+
+                res.render('adminCatways', {
+                    catways: catways,
+                    user: user,
+                    errorMessage: 'Catway déjà utilisé'
+                });
+                
+            }
+            else{
+                await newCatway.save();
+                console.log("METHOD catwaysAdd = élément ajouté avec succés" , newCatway);}
+
         } catch (error) {
-            return res.status(500).json(error);
+            return res.status(501).json({ message: "METHOD catwaysAdd = serveur introuvable" , error });
         }
     }
 
 //on crée une fonction qui va modifier un utilisateur
 
-    exports.catwaysUpdate = async (req, res, next) => {
-        const id = req.params.id;
+exports.CatwaysUpdate = async (req, res, next) => {
+    const id = req.body.catwaysId;
+    const newCatway = req.body;
 
-        const temp = ({
-            number: req.body.number,
-            type: req.body.type,
-            state: req.body.state
-        });
-
-        try {
-            let user = await Catways.findOne({_id : id});
-
-            if (user) {
-                Object.keys(temp).forEach((key) => {
-                    if (!!temp[key]) {
-                        user[key] = temp[key];
-                    }
-                });
-
-                await user.save();
-                return res.status(200).json(user);
-        }
-
-        return res.status(404).json('Utilisateur introuvable');
-    } catch (error) {
-        return res.status(501).json(error);
-    }
-}
-
-//on crée une fonction qui va supprimer un utilisateur
-
-exports.catwaysDelete = async (req, res, next) => {
-    const id = req.params.id;
 
     try {
-        await Catways.deleteOne({ _id: id});
+        let catway = await Catways.findOne({ _id: id });
 
-        return res.status(204).json('delete_ok');
+        if (catway) {
+            Object.keys(newCatway).forEach((key) => {
+                if (!!newCatway[key]) {
+                    catway[key] = newCatway[key];
+                }
+            });
+            await catway.save(); // Enregistre l'objet mis à jour
+                console.log("METHOD CatwaysUpdate = élément mis a jour avec succés" , newCatway);
+            
+
+            
+        } else {
+            return res.status(404).json({ message: 'METHOD CatwaysUpdate = object catway introuvable' }); // Gère le cas où l'objet n'est pas trouvé
+        }
     } catch (error) {
-        return res.status(501).json(error);
+        return res.status(501).json({ message: "METHOD CatwaysUpdate = serveur introuvable" , error });
     }
 }
 
+
+    exports.catwaysDelete = async (req, res, next) => {
+        const id = req.params.id;
+    
+        try {
+            const result = await Catways.deleteOne({ _id: id });
+                console.log("METHOD catwaysDelete = élément supprimé avec succés" , id);
+            if (result.deletedCount === 0) {
+                return res.status(404).json({ message: 'METHOD catwaysDelete = élement inexistant' });
+            }
+        } catch (error) {
+            return res.status(501).json({ message: "METHOD catwaysDelete = serveur introuvable" , error });
+        }
+    };

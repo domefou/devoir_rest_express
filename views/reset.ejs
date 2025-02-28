@@ -17,7 +17,7 @@
     </header>
     <main>
         <h1>Réinitialisation du mot de passe</h1>
-        <form action="/reset" method="POST" id="reset">
+        <form action="/reset?_method=PUT" method="post" id="reset">
             <fieldset>
                 <legend>Informations</legend>
                 <label for="signup_email">Veuillez renseigner votre adresse mail :</label>
@@ -34,6 +34,7 @@
                 <input type="text" name="response" id="secret_response" placeholder="votre réponse" required>
                 <label for="reset_password">Mot de passe :</label>
                 <input type="password" id="reset_password" name="password" placeholder="Mot de passe" required>
+                <small>* le mot de passe doit contenir au moins 8 caractères</small>
                 <label for="confirm_password">Confirmation du mot de passe :</label>
                 <input type="password" id="confirm_password" name="confirmPassword" placeholder="Confirmer le mot de passe" required>
 
@@ -42,8 +43,8 @@
                     <input type="reset" value="Effacer" id="btn_submit_reset">
                 </div>
                 <% if (errorMessage) { %>
-                    <p style="color:rgb(8, 0, 255);"><%= errorMessage %></p>
-                    <% } %>
+                    <p style="color:red;"><%= errorMessage %></p>
+                <% } %>
             </fieldset>
         </form>
     </main>

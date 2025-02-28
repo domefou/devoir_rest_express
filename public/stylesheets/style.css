@@ -259,4 +259,22 @@ footer{
 
 
 
+/*data*/
 
+.resultats_database{
+  margin: auto;
+  width: 80%;
+  background-color: grey;
+}
+table{
+  margin: auto;
+  width: 100%;
+  background-color: aliceblue;
+}
+thead{
+  background-color: rgba(240, 248, 255, 0.592);
+}
+td{
+  height: 35px;
+  background-color: aqua;
+}

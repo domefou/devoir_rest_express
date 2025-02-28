@@ -2,8 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 //Schema est une classe qui permet de définir la structure des documents stockés dans une collection MongoDB.
 const Catways = new Schema({
+    catwaysId:{
+        type : String,
+        trim : true,
+        required : [false, 'pas obligatoire'],
+    },
     catwaysNumber: {
         type : Number,
+        unique: true,
         trim : true,
         required : [true, 'champ requis'],
     },

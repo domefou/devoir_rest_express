@@ -25,6 +25,8 @@ const User = new Schema({
     password: {
         type : String,
         trim : true,
+        required : [true, 'Le mot de passe est obligatoire'],
+        minlength: [8, 'Le mot de passe doit contenir au moins 8 caractères']
     },
     role: {
         type : String,
@@ -44,16 +46,18 @@ const User = new Schema({
     timestamps: true
 });
 
-User.pre('save', function(next) {
-    //save() est une méthode qui permet de sauvegarder un document dans une collection
-    //isModified() est une méthode qui permet de vérifier si un champ a été modifié.
-    if (!this.isModified('password')) {
-        return next();
+User.pre('save', async function(next) {
+    try {
+      if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 10);
+      }
+      if (this.isModified('response')) {
+        this.response = await bcrypt.hash(this.response, 10);
+      }
+      next();
+    } catch (error) {
+      next(error);
     }
-
-    this.password = bcrypt.hashSync(this.password, 10);
-    //bcrypt.hashSync() est une méthode qui permet de hasher un mot de passe de manière synchrone.
-    next();
-});
+  });
 
 module.exports = mongoose.model('User', User);

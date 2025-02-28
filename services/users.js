@@ -1,51 +1,53 @@
-const bcrypt = require('bcrypt');
+const Catways = require('../models/catways');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users');
+const bcrypt = require('bcrypt');
 
 const { SECRET_KEY } = process.env;
 
 exports.authenticate = async (req, res, next) => {
-    const { email, password } = req.body;
+    const {email, password} = req.body;
+
+    if (password.length < 8) {
+        return res.render('login', {
+            errorMessage: 'Le mot de passe doit contenir au moins 8 caractères'
+        });
+    }
 
     try {
-        let user = await User.findOne({ email: email }, '-__v -createdAt -updatedAt');
-
-        if (user) {
-            const isMatch = bcrypt.compare(password, user.password);
-
+        let user = await User.findOne({ email: email });
+        if(user){
+            const isMatch = await bcrypt.compare(password, user.password);
             if (isMatch) {
-                delete user._doc.password;
-
-                const expireIn = 24 * 60 * 60;
-                const token = jwt.sign({
-                    user: user
-                }, SECRET_KEY, {
-                    expiresIn: expireIn
-                });
-
-                // Ajout d'un espace après 'Bearer'
-                res.cookie('token', 'Bearer ' + token, { httpOnly: true, secure: true });
-
-                req.decoded = { user: user }; // Ajout du décodage de l'utilisateur pour l'utiliser après
-                return next();
-            } else {
-                res.status(401).json({ message:'mise en token échouée'});
-                return res.render('login', { 
-                    title: 'login', 
-                    errorMessage: '*email ou mot de passe incorrect.' 
-                });
-            }
-        } else {
-            console.log('Utilisateur introuvable');
-            return res.render('login', { 
-                title: 'login', 
-                errorMessage: 'Utilisateur introuvable.' 
+            delete user._doc.password;
+    
+            const expireIn = 24 * 60 * 60;
+            const token = jwt.sign({
+                user: user
+            }, SECRET_KEY, {
+                expiresIn: expireIn
+            });
+    
+            res.cookie('token', 'Bearer ' + token, { httpOnly: true, secure: true });
+    
+            req.decoded = { user: user };
+            if (user.role === "admin") {
+                return res.redirect('/admin/menu');
+              } else {
+                return res.redirect('/user/menu');
+              }
+        }
+        else{
+            return res.render('login', {
+                errorMessage: "mot de passe ou utilisateur incorrect."
             });
         }
-    }catch (error) {
-        console.error('Erreur lors de l\'authentification :', error);
+        }
+        
+    } catch (error) {
         return res.status(501).json({ message: "Erreur du serveur interne", erreur: error });
-    }};
+    }
+};
 
    
 //on crée une fonction qui va chercher un utilisateur par son id
@@ -66,7 +68,14 @@ exports.getById = async (req, res, next) => {
 
 //on crée une fonction qui va ajouter un utilisateur
 exports.add = async (req, res, next) => {
-    let {name, firstname, email, password, question, response} = req.body;
+    const { name, firstname, email, password, question, response } = req.body;
+    
+
+    if (password.length < 8) {
+        return res.render('signup', {
+            errorMessage: 'Le mot de passe doit contenir au moins 8 caractères'
+        });
+    }
 
     let role;
     if (email === "admin@mail.com") {
@@ -74,34 +83,56 @@ exports.add = async (req, res, next) => {
     } else {
         role = "user";
     }
-
-    try{
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const hashedResponse = await bcrypt.hash(response, 10);
+                const newUser = new User({
+                    name,
+                    firstname,
+                    email,
+                    password,
+                    role,
+                    question,
+                    response
+                  });
         
-    const temp = {
-        name: name,
-        firstname: firstname,
-        email: email,
-        password: hashedPassword,
-        role: role,
-        question: question,
-        response: hashedResponse
-    };
+            const user = await User.create(newUser);
+            req.user = user;
+            console.log('utilisateur creé avec succés : ',user.response) //Stocker l'utilisateur dans req pour une utilisation ultérieure
+            return next(); // Passer au middleware suivant
+        };
 
-        let user = await User.create(temp);
-        console.log('Utilisateur créé avec succès:', user);
-        req.user = user; // Stocker l'utilisateur dans req pour une utilisation ultérieure
-        return next(); // Passer au middleware suivant
-    } catch (error) {
-        console.error('Erreur lors de la création de l\'utilisateur:', error);
-        return res.status(500).json(error);
-    }};
+
+exports.passwordUpdate = async (req, res, next) => {
+const { email, password, response } = req.body;
+
+    try {
+        if (password.length < 8) {
+            return res.render('reset', {
+            errorMessage: 'Le mot de passe doit contenir au moins 8 caractères'
+        });
+        }
+
+        let user = await User.findOne({ email: email }, '-__v -updatedAt');
+        
+        if(user){
+            const valideResponse = await bcrypt.compare(response, user.response);
     
-
-   
-
-//on crée une fonction qui va modifier un utilisateur
+        if (valideResponse) {
+            console.log('passwordUpdate : Réponse correcte, mise à jour du mot de passe');
+        await user.save(password);
+        console.log('passwordUpdate : nouveau mdp crypté : ', password);
+        return res.redirect('/login');
+        } else {
+        console.log('passwordUpdate : Question ou réponse incorrecte');
+        return res.render('reset',{
+            errorMessage : "impossible de mettre a jour le mot de passe"
+        })
+        }
+        }
+        
+    } catch (error) {
+        console.error("passwordUpdate : erreur lors d'utilisation de la method", error);
+        return res.render('reset');
+    }
+}
 
     exports.update = async (req, res, next) => {
         const id = req.params.id;
@@ -114,6 +145,11 @@ exports.add = async (req, res, next) => {
             question : req.body.question,
             response : req.body.response
         });
+        
+        if (password.length < 8) {
+            return res.render('signup', {
+              errorMessage: 'le mot de passe ne contient pas les conditions requise' });
+            }
 
         try {
             let user = await User.findOne({_id : id});
@@ -137,32 +173,6 @@ exports.add = async (req, res, next) => {
     }
 }
 
-exports.passwordUpdate = async (req, res, next) => {
-    const question = req.body.question;
-    const response = req.body.response;
-    const newPassword = req.body.password;
-    const email = req.body.email;
-
-    try {
-        
-        let user = await User.findOne({email: email}, '-__v -updatedAt');
-        
-        if (!user) {
-            console.log('Utilisateur introuvable');
-            return res.status(404).json({ message: 'Utilisateur introuvable' });
-        }
-        if(question === user.question && response === user.response){
-
-        // Mettre à jour le mot de passe
-        user.password = await bcrypt.hash(newPassword, 10);
-        await user.save();
-        console.log('Mot de passe mis à jour avec succès pour l\'utilisateur :');
-        return next();
-    }} catch (error) {
-        console.error('Erreur lors de la mise à jour du mot de passe :', error);
-        return res.status(500).json({ message: 'Erreur du serveur interne', erreur: error });
-    }
-};
 
     
 //on crée une fonction qui va supprimer un utilisateur
@@ -180,4 +190,13 @@ exports.delete = async (req, res, next) => {
 }
 
 
+/*
+admin
+response: $2b$10$NdEY2ZndnKu3LuRsdUxHFuiPHkNyeviaYAyQNiozXnVcodSu6abdm
 
+password: '$2b$10$NJdVjMCEMKOgNRD6DlmVh.3B5OG6/a4eAsK5g4GUSnf/5Zd3w8XkK',
+
+user
+response :  $2b$10$6ZtN61nhiUg3h8Oc9YTkiOBpT/4hxKsiG1Ufeh3wXB5v2EuKEkD5G
+
+*/
