@@ -3,185 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/javascripts/admin/adminCatways.js" defer></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <title>API port Russell</title>
 </head>
 <body>
     <header>
-        <div class="navbar">
-            <ul>
-                <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
-                <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
-                <li class="navbar-li_center"><a href="/admin/reservation">Réservations</a></li>
-                <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
-            </ul>
-            <div class="identifiant">
-                <p><%= user.email %></p>
-                <p><%= user.name %></p>
-            </div>
-            <button id="logoutButton">Déconnexion</button>
+      <div class="navbar">
+        <ul>
+          <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
+          <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
+          <li class="navbar-li_center"><a href="/admin/reservations">Réservations</a></li>
+          <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
+        </ul>
+        <div class="identifiant">
+          <p><%= user.email %></p>
+          <p><%= user.name %></p>
         </div>
+        <button id="logoutButton">Déconnexion</button>
+      </div>
     </header>
-    <main>
-        <h1>Données Catways</h1>
+    
 
-
-                
         
 
-             <form method="post" action="/admin/catways" id="catwayForm">
-            <fieldset>
-                <legend>réservez un catway</legend>
-                
-                
-                <select id="Number" name="catwaysNumber">
-                    <option value="" >Sélectionner l'emplacement</option>
-                </select>
+<!---------------------------------------- FORMULAIRE AJOUT ET MODIFICATION -------------------------------------->
+  <main>
+    <h1>Données Catways</h1>           
 
-                <label for="catwaysState">etat du catway</label>
-                <input type="text" name="catwaysState" id="State" value="">
+    <form method="post" action="/admin/catways/add" id="formCatways">
+      <fieldset >
+        <legend>Ajouter un catway</legend>
+      
+        <label for="Number">Sélectionner le numéro du catway :</label>
+        <select id="Number" name="catwaysNumber" required>
+          <option value="" disabled selected>choisir</option>
+        </select>
 
-                <select name="catwaysType" id="Type">nom du bateau :
-                    <option value="long">long</option>
-                    <option value="short">short</option>
-                </select>
+        <label for="State">entrez l'etat du catway :</label>
+        <input type="text" name="catwaysState" id="State" value="" required>
+      
+      
+        <label for="Type">type de catway :</label>
+        <select name="catwaysType" id="Type" required>
+          <option value="" disabled selected>choisir</option>
+          <option value="long">long</option>
+          <option value="short">short</option>
+        </select>
 
-                <input type="text" name="catwaysId" id="id" value="" placeholder="identifiant">
-                
-
-                <div class="btn_submit_reset">
-                    <input type="submit" value="Envoyer" id="btn_submit">
-                    <input type="reset" value="Effacer" id="btn_reset">
-                </div>
-                    <% if (errorMessage) { %>
-                        <p style="color:red;"><%= errorMessage %></p>
-                    <% } %>
-            </fieldset>
-        </form>   
-        <!--
-            <form action="/admin/catways" id="deleteForm" method="post">
-                <label for="catwaysId">Identifiant du Catway :</label>
-                <input type="text" name="catwaysId" id="catwaysId" required>
-                <input type="submit" value="Supprimer" id="deleteBtn">
-            </form>
-        -->
-
-     
-    
-        <div class="resultats_database">
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Identifiant</th>
-                        <th>Numéro</th>
-                        <th>Type</th>
-                        <th>État</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <% catways.forEach(catway => { %>
-                    <tr class="ligne" data-id="<%= catway._id %>">
-                        <td class="catwaysId" data-id="<%= catway._id %>"> <%= catway._id %></td>
-                        <td class="catwaysNumber" data-number="<%= catway.catwaysNumber %>"><%= catway.catwaysNumber %></td>
-                        <td class="catwaysType" data-type="<%= catway.catwaysType %>"><%= catway.catwaysType %> </td>
-                        <td class="catwaysState" data-state="<%= catway.catwaysState %>"><%= catway.catwaysState %></td>
-                        <td>
-                            <form action="/admin/catways/delete" id="deleteForm" method="post">
-                                <input type="hidden" name="catwaysId" value="<%= catway._id %>">
-                                <input type="submit" value="Supprimer" id="deleteBtn">
-                            </form>
-                        </td>
-                        <td>
-                            <button class="updateBtn">Modifier</button>
-                        </td>
-                        
-                        
-                    </tr>
-                        <% }) %>
-                </tbody>
-            </table>
-
+        <input type="hidden" name="_id" id="id" value="">
+        <div class="secret_question"></div>
+        <div class="btn_submit_reset">
+        
+          <input type="submit" value="Envoyer" id="btn_submit">
+          <input type="reset" value="reinitialiser le formulaire">
         </div>
+      </fieldset>
+    </form>
+      
+<!----------------------------------------- FORMULAIRE RECHERCHE ------------------------------------------------>
+      
+    <form method="post" action="/admin/catways/find">
+      <fieldset>
+        <legend> rechercher un catway</legend>
+        <input type="number" name="catwaysNumber" id="searchInput">
+        <button id="searchBtn">rechercher</button>
+      </fieldset>
+      <div class="paramsMessage">
+        <% if (successMessage) { %>
+          <p style="color:blue;"><%= successMessage %></p>
+        <% } %>
+            
+        <% if (errorMessage) { %>
+          <p style="color:red;"><%= errorMessage %></p>
+        <% } %>
+
+      </div>
+    </form>
+  
+
     
-    </main>
-    <footer>
-        
-    </footer>
-    <!-- Script pour gérer la déconnexion -->
-    <script>
-        document.getElementById('logoutButton').addEventListener('click', function() {
-            window.location.href = '/logout'; // Redirige vers la route de déconnexion
-        });
-
-        const select = document.getElementById('Number');
-
-        for (let i = 1; i <= 13; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            select.appendChild(option);
-        };
 
 
 
 
-        document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.updateBtn');
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            const parentRow = button.closest('.ligne');
-            const catwaysId = parentRow.querySelector('.catwaysId').dataset.id;
-            const catwaysNumber = parentRow.querySelector('.catwaysNumber').dataset.number;
-            const catwaysType = parentRow.querySelector('.catwaysType').dataset.type;
-            const catwaysState = parentRow.querySelector('.catwaysState').dataset.state;
 
-            update(catwaysId, catwaysNumber, catwaysType, catwaysState);
-        });
-    });
 
-    function update(id, number, type, state) {
-        console.log("ID :", id);
-        console.log("Number :", number);
-        console.log("Type :", type);
-        console.log("State :", state);
-        // Ajoutez ici votre logique de mise à jour
-        document.getElementById('Number').value = number;
-        document.getElementById('State').value = state;
-        
-        const selectElement = document.getElementById('Type');
-        selectElement.value = type;
-        selectElement.disabled = true;
+<!--------------------------------------- Premier tableau pour un seul résultat ---------------------------------->
+    <button class="all">afficher tout les catways</button>
+    <button id="btnReset">Masquer la recherche</button>
+    <button id="btnAddCatway">ajouter un catway</button>
 
-        document.getElementById('id').value = id;
-        }
+    <table class="catwaysTable">
+      <thead>
+        <tr>
+          <th>Numéro</th>
+          <th>Type</th>
+          <th>État</th>
+          <th>Supprimer</th>
+          <th>Modifier</th>
+        </tr>
+      </thead>
+      <tbody id="searchResult">
+        <% if (findCatways) { %>
+        <tr class="ligne" id="found">
+          <td class="catwaysNumber" data-number="<%= findCatways.catwaysNumber %>"><%= findCatways.catwaysNumber %></td>
+          <td class="catwaysType" data-type="<%= findCatways.catwaysType %>"><%= findCatways.catwaysType %></td>
+          <td class="catwaysState" data-state="<%= findCatways.catwaysState %>"><%= findCatways.catwaysState %></td>
+          <td>
+            <button class="inputDelete" form="globalDeleteForm" data-number="<%= findCatways.catwaysNumber %>" data-type="<%= findCatways.catwaysType %>" data-state="<%= findCatways.catwaysState %>">Supprimer</button>
+          </td>
+          <td>
+            <button class="updateBtn">Modifier</button>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
 
-    });
 
-/*
-        function update(id){
-            let catwaysNumber = document.getElementById(`catwaysNumber`).dataset.number;
-            let catwaysState = document.getElementById(`catwaysState`).dataset.state;
-            let catwaysType = document.getElementById(`catwaysType`).dataset.type; 
-            let catwaysId = document.getElementById(`catwaysId`).dataset.id;
 
-        document.getElementById('Number').value = catwaysNumber;
 
-        document.getElementById('State').value = catwaysState;
+  <!---------------------------------------Tableau pour tous les résultats----------------------------------- -->
+            
+      
+    <table id="allResult" class="catwaysTable">
+    
+      <% if (catways.length > 0) { %>
+      <% catways.forEach(catway => { %>
+            
+      <thead>
+      </thead>
+      <tbody>
+        <tr class="ligne">
+          <td class="catwaysNumber" data-number="<%= catway.catwaysNumber %>"><%= catway.catwaysNumber %> </td>
+          <td class="catwaysType" data-type="<%= catway.catwaysType %>"> <%= catway.catwaysType %> </td>
+          <td class="catwaysState" data-state="<%= catway.catwaysState %>"> <%= catway.catwaysState %> </td>
+          <td class="delete">
+            <button class="inputDelete" form="globalDeleteForm" data-number="<%= catway.catwaysNumber %>" data-type="<%= catway.catwaysType %>" data-state="<%= catway.catwaysState %>">Supprimer</button>
+          </td>
+          <td class="update">
+            <button class="updateBtn">Modifier</button>
+          </td>
+        </tr>
+        <% }); %>
+        <% } %>
+      </tbody>
+      <tfoot>
+      </tfoot>
+    </table>
 
-        document.getElementById('Type').value = catwaysType;
 
-        document.getElementById('id').value = catwaysId;
-        }
 
-        // Adaptez l'événement de clic pour passer l'id
-    let updateBtn = document.getElementById('updateBtn');
-        updateBtn.addEventListener('click', () => {
-            let id = catwaysId;
-    update(id);
-});
-*/
 
-    </script>
+
+
+
+  <!----------------------------------------- FORMULAIRE SUPPRESSION ------------------------------------------------>      
+
+    <form action="/admin/catways/delete" id="globalDeleteForm" method="post">
+      <input type="hidden" name="catwaysNumber" id="form_catwaysNumber">
+      <input type="hidden" name="catwaysState" id="form_catwaysState">
+      <input type="hidden" name="catwaysType" id="catwaysType">
+    </form>
+
+  </main>
+  <footer>
+
+  </footer>
 </body>
 </html>

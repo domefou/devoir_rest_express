@@ -259,22 +259,133 @@ footer{
 
 
 
-/*data*/
 
-.resultats_database{
-  margin: auto;
-  width: 80%;
-  background-color: grey;
+/*data*/
+#deleteForm1,
+#deleteForm2{
+  display: none;
 }
-table{
+#globalDeleteForm{
+  display: none;
+}
+
+
+.usersTable,
+.catwaysTable,
+.reservationsTable{
   margin: auto;
   width: 100%;
-  background-color: aliceblue;
+  border: 2px solid rgb(0, 2, 90);
 }
-thead{
-  background-color: rgba(240, 248, 255, 0.592);
+
+
+.usersTable thead,
+.catwaysTable thead,
+.reservationsTable thead{
+  background-color: rgb(42, 61, 165);
 }
-td{
+
+.catwaysTable tbody,
+.usersTable tbody,
+.reservationsTable tbody{
+  background-color: rgba(0, 194, 253, 0.805);
+}
+
+.usersTable tfoot,
+.catwaysTable tfoot,
+.reservationsTable tfoot{
+  background-color: rgb(42, 61, 165);
+}
+
+.reservationsTable tr,
+.usersTable tr,
+.catwaysTable tr{
+  width: 100%;
+  height: 30px;
+}
+
+.reservationsTable tbody tr:hover,
+.usersTable tbody tr:hover,
+.catwaysTable tbody tr:hover{
+  background-color: rgba(0, 130, 169, 0.805);
+  color: rgb(255, 255, 255);
+}
+
+.reservationsTable th,
+.usersTable th,
+.catwaysTable th{
+  color: white;
+}
+
+.catwaysId{
+  display: none;
+}
+
+#formCatways{
+  display: none;
+}
+
+.inputDelete{
+  color: red;
+}
+
+.inputDelete,
+.updateBtn{
+  display: block;
   height: 35px;
-  background-color: aqua;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* error*/
+
+#found{
+  background-color: rgba(108, 221, 255, 0.856);
+  color: white;
+}
+
+#found:hover{
+  background-color: rgba(0, 130, 169, 0.805);
+  color: rgb(0, 0, 0);
+}
+
+
+.usersTable td,
+.catwaysTable td,
+.usersTable th,
+.catwaysTable th{
+width: 20%;
+min-height: 100%;
+padding: 0;
+text-align: center;
+}
+
+.reservationsTable td,
+.reservationsTable th{
+  width: 14%;
+  min-height: 100%;
+  padding: 0;
+  text-align: center;
+}
+
+
+.reservationsId{
+  display: none;
+}
+#formCatways,
+#formReservations{
+  display: none;
+}
+
+
+
+.paramsMessage{
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-bottom: 5px;
 }

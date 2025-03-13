@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
-const bcrypt = require('bcrypt');
 //bcrypt est un module qui permet de hasher les mots de passe.
 
 //Schema est une classe qui permet de définir la structure des documents stockés dans une collection MongoDB.
-const Reservation = new Schema({
-    catwayNumber: {
+const Reservations = new Schema({
+    catwaysNumber: {
         type : Number,
         trim : true,
         required : [true, 'champ requis'],
@@ -38,9 +36,9 @@ const Reservation = new Schema({
     timestamps: true
 });
 
-Reservation.pre('save', function(next) {
+Reservations.pre('save', function(next) {
     //bcrypt.hashSync() est une méthode qui permet de hasher un mot de passe de manière synchrone.
     next();
 });
 
-module.exports = mongoose.model('Reservation', Reservation);
+module.exports = mongoose.model('Reservations', Reservations);

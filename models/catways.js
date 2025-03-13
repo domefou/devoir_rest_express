@@ -9,7 +9,7 @@ const Catways = new Schema({
     },
     catwaysNumber: {
         type : Number,
-        unique: true,
+        unique : true,
         trim : true,
         required : [true, 'champ requis'],
     },

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const service = require('../services/users');
+const service = require('../../services/users');
 
 // Route de déconnexion
 router.get('/reset', (req, res) => {

@@ -15,15 +15,24 @@ const methodOverride = require('method-override');
 
 
 //route public
-const publicRoutes = require('./routes/publicRoutes');
+const accueil = require('./routes/public/accueil');
+const login = require('./routes/public/login');
+const signup = require('./routes/public/signup');
 //route securisé admin
-const securedAdmin = require('./routes/securedAdmin');
-//route securisé user
-const securedUser = require('./routes/securedUser');
-//route deconnexion
-const logout = require('./routes/logout');
+const adminMenu = require('./routes/private/admin/menu');
+const adminUsers = require('./routes/private/admin/users');
+const adminCatways = require('./routes/private/admin/catways');
+const adminReservations = require('./routes/private/admin/reservations');
 
-const reset = require('./routes/reset');
+
+
+//route securisé user
+const userMenu = require('./routes/private/user/menu');
+const userReservations = require('./routes/private/user/reservations');
+//route deconnexion
+const logout = require('./routes/private/logout');
+
+const reset = require('./routes/private/reset');
 
 
 // Connexion à MongoDB
@@ -35,6 +44,10 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+
 //
 app.use(methodOverride('_method'));
 
@@ -84,11 +97,11 @@ app.use(cors({
 }));
 
 // Utilisation des routes
-app.use('/', publicRoutes );
+app.use('/', accueil, login, signup);
 
-app.use('/admin', securedAdmin);
+app.use('/admin', adminUsers, adminCatways, adminReservations, adminMenu);
 
-app.use('/user', securedUser);
+app.use('/user', userMenu, userReservations);
 
 app.use('/', logout);
 
