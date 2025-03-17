@@ -51,7 +51,30 @@ footer {
     margin: auto;
     border-top: double 4px rgb(206, 163, 247);
     background-color: rgb(103, 103, 103);
-    min-height: 30px;
+    min-height: 70px;
+}
+
+footer ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+footer li {
+    list-style-type: none;
+    width: 20%;
+    height: 25px;
+}
+
+footer a {
+    width: 100%;
+    color: aliceblue;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: rgba(240, 248, 255, 0.699);
 }
 
 a {

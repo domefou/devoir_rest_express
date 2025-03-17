@@ -39,6 +39,7 @@ const reset = require('./routes/private/reset');
 const mongodb = require('./db/mongo');
 mongodb.initClientDbConnection();
 
+
 // Création de l'application Express
 const app = express();
 
@@ -108,10 +109,14 @@ app.use('/', logout);
 app.use('/', reset);
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/docs', express.static(path.join(__dirname, 'docs')));
+
 
 app.use((req, res, next) => {
     res.status(404).json({ name: 'API', version: '1.0', status: 404, message: 'Not Found' });
 });
+
+
 
 
 
