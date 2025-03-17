@@ -15,11 +15,5 @@
             "src": "/(.*)",
             "dest": "bin/www.js"
         }
-    ],
-    "env": {
-        "NODE_ENV": "production",
-        "SECRET_KEY": "@secret_key",
-        "URL_MONGO": "@url_mongo",
-        "APP_NAME": "@app_name"
-    }
+    ]
 }
