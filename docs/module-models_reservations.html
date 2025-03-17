@@ -1,25 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Module: models/reservations</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> models/reservations</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
 </head>
 
-<body>
 
-<div id="main">
 
-    <h1 class="page-title">Module: models/reservations</h1>
-
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
     
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-models_catways.html">models/catways</a></li><li><a href="module-models_reservations.html">models/reservations</a></li><li><a href="module-models_user.html">models/user</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Ajouteungestionnaired'%25C3%25A9v%25C3%25A9nement%2560click%2560surchaqueboutondesuppression:-Lorsqu'unboutonestcliqu%25C3%25A9,lesdonn%25C3%25A9esducatwaycorrespondantsontr%25C3%25A9cup%25C3%25A9r%25C3%25A9esetins%25C3%25A9r%25C3%25A9esdansleformulaireglobal.-Leformulaireestensuitesoumisautomatiquementpourtraiterlasuppression.">Ajoute un gestionnaire d'événement `click` sur chaque bouton de suppression :- Lorsqu'un bouton est cliqué, les données du catway correspondant sont récupérées et insérées dans le formulaire global.- Le formulaire est ensuite soumis automatiquement pour traiter la suppression.</a></li><li><a href="global.html#Ajouteungestionnaired'%25C3%25A9v%25C3%25A9nements%2560click%2560surchaqueboutondemise%25C3%25A0jour:-R%25C3%25A9cup%25C3%25A8reouconfiguredynamiquementleformulairedestin%25C3%25A9%25C3%25A0lamise%25C3%25A0jour.-Ajouteun%25C3%25A9v%25C3%25A9nement%2560submit%2560pourenvoyerlesdonn%25C3%25A9esenPUTettraiterlesretoursserveur.">Ajoute un gestionnaire d'événements `click` sur chaque bouton de mise à jour :- Récupère ou configure dynamiquement le formulaire destiné à la mise à jour.- Ajoute un événement `submit` pour envoyer les données en PUT et traiter les retours serveur.</a></li><li><a href="global.html#Gestionnaired'%25C3%25A9v%25C3%25A9nement%2560click%2560surleboutond'ajout:-Activeleformulaired'ajoutoureconfiguredynamiquementunformulaireexistantpourtraiterunerequ%25C3%25AAtePOST.-D%25C3%25A9finitungestionnaire%2560submit%2560pourenvoyerlesdonn%25C3%25A9essaisies%25C3%25A0l'endpointcorrespondant.">Gestionnaire d'événement `click` sur le bouton d'ajout :- Active le formulaire d'ajout ou reconfigure dynamiquement un formulaire existant pour traiter une requête POST.- Définit un gestionnaire `submit` pour envoyer les données saisies à l'endpoint correspondant.</a></li><li><a href="global.html#G%25C3%25A9n%25C3%25A9rationdynamiquedelalisted%25C3%25A9roulante:-Lalisted%25C3%25A9roulanteestcibl%25C3%25A9eparsonID%2560Number%2560.-Desoptionsnum%25C3%25A9rot%25C3%25A9esde1%25C3%25A024sontajout%25C3%25A9es%25C3%25A0cetteliste.-Chaqueoptionaune%2560value%2560correspondantaunum%25C3%25A9roetuntexteaffich%25C3%25A9identique.">Génération dynamique de la liste déroulante :- La liste déroulante est ciblée par son ID `Number`.- Des options numérotées de 1 à 24 sont ajoutées à cette liste.- Chaque option a une `value` correspondant au numéro et un texte affiché identique.</a></li><li><a href="global.html#formaterDateFormateunedatedonn%25C3%25A9eauformat%2560YYYY-MM-DD%2560.-Siladateestvideouinvalide,renvoieunecha%25C3%25AEnevide.">formaterDateFormate une date donnée au format `YYYY-MM-DD`.- Si la date est vide ou invalide, renvoie une chaîne vide.</a></li><li><a href="global.html#handleSortClickAjouteungestionnaireauboutonpouralternerentrelesdeuxm%25C3%25A9thodesdetri:-Basculelavariableglobale%2560sortByNumber%2560pourd%25C3%25A9terminerlam%25C3%25A9thodedetri.-Trieleslignessoitparnum%25C3%25A9rodecatway,soitpardate,enmettant%25C3%25A0jourletextedubouton.-R%25C3%25A9ins%25C3%25A8releslignestri%25C3%25A9esdansletableau.">handleSortClickAjoute un gestionnaire au bouton pour alterner entre les deux méthodes de tri :- Bascule la variable globale `sortByNumber` pour déterminer la méthode de tri.- Trie les lignes soit par numéro de catway, soit par date, en mettant à jour le texte du bouton.- Réinsère les lignes triées dans le tableau.</a></li><li><a href="global.html#listAllResultAjouteun%25C3%25A9couteurd'%25C3%25A9v%25C3%25A9nementsurleboutonetalternel'affichagedel'%25C3%25A9l%25C3%25A9mentder%25C3%25A9sultats:-Silesr%25C3%25A9sultatssontmasqu%25C3%25A9s(%2560display:'none'%2560),l'%25C3%25A9l%25C3%25A9mentpasseenmodetableau(%2560display:'table'%2560)etletexteduboutonestmis%25C3%25A0jouren%2560Masquertout%2560.-Sinon,l'%25C3%25A9l%25C3%25A9mentestmasqu%25C3%25A9%25C3%25A0nouveauetletexteduboutonrevient%25C3%25A0%2560affichertout%2560.">listAllResultAjoute un écouteur d'événement sur le bouton et alterne l'affichage de l'élément de résultats :- Si les résultats sont masqués (`display: 'none'`), l'élément passe en mode tableau (`display: 'table'`) et  le texte du bouton est mis à jour en `Masquer tout`.- Sinon, l'élément est masqué à nouveau et le texte du bouton revient à `afficher tout`.</a></li><li><a href="global.html#onSubmitAjouteun%25C3%25A9v%25C3%25A9nement%2560submit%2560auformulaireglobal:-Pr%25C3%25A9parelesdonn%25C3%25A9esvia%2560FormData%2560etlesconvertitenJSON.-Effectueunerequ%25C3%25AAteDELETEasynchronepoursupprimeruneressourcesurleserveur.-G%25C3%25A8relescasdesucc%25C3%25A8soud'erreur.">onSubmitAjoute un événement `submit` au formulaire global :- Prépare les données via `FormData` et les convertit en JSON.- Effectue une requête DELETE asynchrone pour supprimer une ressource sur le serveur.- Gère les cas de succès ou d'erreur.</a></li><li><a href="global.html#resetAjouteun%25C3%25A9v%25C3%25A9nement%2560click%2560auboutonder%25C3%25A9initialisation:-Videlechampderecherche.-Alternelavisibilit%25C3%25A9desr%25C3%25A9sultatsderecherche(%2560#searchResult%2560)etmet%25C3%25A0jourletextedubouton.">resetAjoute un événement `click` au bouton de réinitialisation :- Vide le champ de recherche.- Alterne la visibilité des résultats de recherche (`#searchResult`) et met à jour le texte du bouton.</a></li><li><a href="global.html#updateMet%25C3%25A0jourleschampsduformulaireaveclesdonn%25C3%25A9esr%25C3%25A9cup%25C3%25A9r%25C3%25A9es:-Renseigneleschamps%2560id%2560,%2560State%2560,%2560Number%2560et%2560Type%2560.-D%25C3%25A9sactiveleschamps%2560Number%2560et%2560Type%2560pour%25C3%25A9viterleurmodification.">updateMet à jour les champs du formulaire avec les données récupérées :- Renseigne les champs `id`, `State`, `Number` et `Type`.- Désactive les champs `Number` et `Type` pour éviter leur modification.</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Module</p>
+                    <h1>models/reservations</h1>
+                </header>
+                
 
 
 
@@ -57,194 +114,193 @@
 
 
 
-
     <h5 class="subsection-title">Properties:</h5>
 
     
+<div class="table-container">
+    <table class="props table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
 
-<table class="props">
-    <thead>
-    <tr>
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
         
-        <th>Name</th>
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>catwaysNumber</code></td>
+    
+
+    <td class="type">
+    
         
+<code class="param-type">Number</code>
 
-        <th>Type</th>
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last">Numéro du catway associé à la réservation (obligatoire).</td>
+</tr>
 
         
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>clientName</code></td>
+    
+
+    <td class="type">
+    
+        
+<code class="param-type">String</code>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last">Nom du client ayant effectué la réservation (obligatoire).</td>
+</tr>
 
         
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>boatName</code></td>
     
 
-        <tr>
-            
-                <td class="name"><code>catwaysNumber</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
+    <td class="type">
+    
+        
+<code class="param-type">String</code>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Numéro du catway associé à la réservation (obligatoire).</td>
-        </tr>
+    
+    </td>
 
     
 
-        <tr>
-            
-                <td class="name"><code>clientName</code></td>
-            
+    
 
-            <td class="type">
+    <td class="description last">Nom du bateau pour lequel la réservation est effectuée (obligatoire).</td>
+</tr>
+
+        
             
-                
-<span class="param-type">String</span>
+<tr class="deep-level-0">
+    
+        <td class="name"><code>startDate</code></td>
+    
+
+    <td class="type">
+    
+        
+<code class="param-type">Date</code>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Nom du client ayant effectué la réservation (obligatoire).</td>
-        </tr>
+    
+    </td>
 
     
 
-        <tr>
-            
-                <td class="name"><code>boatName</code></td>
-            
+    
 
-            <td class="type">
+    <td class="description last">Date de début de la réservation (obligatoire).</td>
+</tr>
+
+        
             
-                
-<span class="param-type">String</span>
+<tr class="deep-level-0">
+    
+        <td class="name"><code>endDate</code></td>
+    
+
+    <td class="type">
+    
+        
+<code class="param-type">Date</code>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Nom du bateau pour lequel la réservation est effectuée (obligatoire).</td>
-        </tr>
+    
+    </td>
 
     
 
-        <tr>
-            
-                <td class="name"><code>startDate</code></td>
-            
+    
 
-            <td class="type">
+    <td class="description last">Date de fin de la réservation (obligatoire).</td>
+</tr>
+
+        
             
-                
-<span class="param-type">Date</span>
+<tr class="deep-level-0">
+    
+        <td class="name"><code>createdAt</code></td>
+    
+
+    <td class="type">
+    
+        
+<code class="param-type">Date</code>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date de début de la réservation (obligatoire).</td>
-        </tr>
+    
+    </td>
 
     
 
-        <tr>
-            
-                <td class="name"><code>endDate</code></td>
-            
+    
 
-            <td class="type">
+    <td class="description last">Date de création du document (ajoutée automatiquement par Mongoose).</td>
+</tr>
+
+        
             
-                
-<span class="param-type">Date</span>
+<tr class="deep-level-0">
+    
+        <td class="name"><code>updatedAt</code></td>
+    
+
+    <td class="type">
+    
+        
+<code class="param-type">Date</code>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date de fin de la réservation (obligatoire).</td>
-        </tr>
+    
+    </td>
 
     
 
-        <tr>
-            
-                <td class="name"><code>createdAt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Date</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date de création du document (ajoutée automatiquement par Mongoose).</td>
-        </tr>
-
     
 
-        <tr>
-            
-                <td class="name"><code>updatedAt</code></td>
-            
+    <td class="description last">Date de dernière mise à jour du document (ajoutée automatiquement par Mongoose).</td>
+</tr>
 
-            <td class="type">
-            
-                
-<span class="param-type">Date</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date de dernière mise à jour du document (ajoutée automatiquement par Mongoose).</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
+        
+        </tbody>
+    </table>
+</div>
 
 
 
@@ -273,20 +329,23 @@
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_reservation.js.html">models/reservation.js</a>, <a href="models_reservation.js.html#line1">line 1</a>
-    </li></ul></dd>
     
 
     
 
     
 
+    
+        <p class="tag-source">
+            <a href="models_reservation.js.html" class="button">View Source</a>
+            <span>
+                <a href="models_reservation.js.html">models/reservation.js</a>, <a href="models_reservation.js.html#line1">line 1</a>
+            </span>
+        </p>
     
 </dl>
+
+
 
 
 
@@ -310,7 +369,7 @@
         
     
     </div>
-
+    
     
 
     
@@ -343,19 +402,26 @@
 
 
 
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-models_catways.html">models/catways</a></li><li><a href="module-models_reservations.html">models/reservations</a></li><li><a href="module-models_user.html">models/user</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Ajouteungestionnaired'%25C3%25A9v%25C3%25A9nement%2560click%2560surchaqueboutondesuppression:-Lorsqu'unboutonestcliqu%25C3%25A9,lesdonn%25C3%25A9esducatwaycorrespondantsontr%25C3%25A9cup%25C3%25A9r%25C3%25A9esetins%25C3%25A9r%25C3%25A9esdansleformulaireglobal.-Leformulaireestensuitesoumisautomatiquementpourtraiterlasuppression.">Ajoute un gestionnaire d'événement `click` sur chaque bouton de suppression :- Lorsqu'un bouton est cliqué, les données du catway correspondant sont récupérées et insérées dans le formulaire global.- Le formulaire est ensuite soumis automatiquement pour traiter la suppression.</a></li><li><a href="global.html#Ajouteungestionnaired'%25C3%25A9v%25C3%25A9nements%2560click%2560surchaqueboutondemise%25C3%25A0jour:-R%25C3%25A9cup%25C3%25A8reouconfiguredynamiquementleformulairedestin%25C3%25A9%25C3%25A0lamise%25C3%25A0jour.-Ajouteun%25C3%25A9v%25C3%25A9nement%2560submit%2560pourenvoyerlesdonn%25C3%25A9esenPUTettraiterlesretoursserveur.">Ajoute un gestionnaire d'événements `click` sur chaque bouton de mise à jour :- Récupère ou configure dynamiquement le formulaire destiné à la mise à jour.- Ajoute un événement `submit` pour envoyer les données en PUT et traiter les retours serveur.</a></li><li><a href="global.html#Gestionnaired'%25C3%25A9v%25C3%25A9nement%2560click%2560surleboutond'ajout:-Activeleformulaired'ajoutoureconfiguredynamiquementunformulaireexistantpourtraiterunerequ%25C3%25AAtePOST.-D%25C3%25A9finitungestionnaire%2560submit%2560pourenvoyerlesdonn%25C3%25A9essaisies%25C3%25A0l'endpointcorrespondant.">Gestionnaire d'événement `click` sur le bouton d'ajout :- Active le formulaire d'ajout ou reconfigure dynamiquement un formulaire existant pour traiter une requête POST.- Définit un gestionnaire `submit` pour envoyer les données saisies à l'endpoint correspondant.</a></li><li><a href="global.html#G%25C3%25A9n%25C3%25A9rationdynamiquedelalisted%25C3%25A9roulante:-Lalisted%25C3%25A9roulanteestcibl%25C3%25A9eparsonID%2560Number%2560.-Desoptionsnum%25C3%25A9rot%25C3%25A9esde1%25C3%25A024sontajout%25C3%25A9es%25C3%25A0cetteliste.-Chaqueoptionaune%2560value%2560correspondantaunum%25C3%25A9roetuntexteaffich%25C3%25A9identique.">Génération dynamique de la liste déroulante :- La liste déroulante est ciblée par son ID `Number`.- Des options numérotées de 1 à 24 sont ajoutées à cette liste.- Chaque option a une `value` correspondant au numéro et un texte affiché identique.</a></li><li><a href="global.html#formaterDateFormateunedatedonn%25C3%25A9eauformat%2560YYYY-MM-DD%2560.-Siladateestvideouinvalide,renvoieunecha%25C3%25AEnevide.">formaterDateFormate une date donnée au format `YYYY-MM-DD`.- Si la date est vide ou invalide, renvoie une chaîne vide.</a></li><li><a href="global.html#handleSortClickAjouteungestionnaireauboutonpouralternerentrelesdeuxm%25C3%25A9thodesdetri:-Basculelavariableglobale%2560sortByNumber%2560pourd%25C3%25A9terminerlam%25C3%25A9thodedetri.-Trieleslignessoitparnum%25C3%25A9rodecatway,soitpardate,enmettant%25C3%25A0jourletextedubouton.-R%25C3%25A9ins%25C3%25A8releslignestri%25C3%25A9esdansletableau.">handleSortClickAjoute un gestionnaire au bouton pour alterner entre les deux méthodes de tri :- Bascule la variable globale `sortByNumber` pour déterminer la méthode de tri.- Trie les lignes soit par numéro de catway, soit par date, en mettant à jour le texte du bouton.- Réinsère les lignes triées dans le tableau.</a></li><li><a href="global.html#listAllResultAjouteun%25C3%25A9couteurd'%25C3%25A9v%25C3%25A9nementsurleboutonetalternel'affichagedel'%25C3%25A9l%25C3%25A9mentder%25C3%25A9sultats:-Silesr%25C3%25A9sultatssontmasqu%25C3%25A9s(%2560display:'none'%2560),l'%25C3%25A9l%25C3%25A9mentpasseenmodetableau(%2560display:'table'%2560)etletexteduboutonestmis%25C3%25A0jouren%2560Masquertout%2560.-Sinon,l'%25C3%25A9l%25C3%25A9mentestmasqu%25C3%25A9%25C3%25A0nouveauetletexteduboutonrevient%25C3%25A0%2560affichertout%2560.">listAllResultAjoute un écouteur d'événement sur le bouton et alterne l'affichage de l'élément de résultats :- Si les résultats sont masqués (`display: 'none'`), l'élément passe en mode tableau (`display: 'table'`) et  le texte du bouton est mis à jour en `Masquer tout`.- Sinon, l'élément est masqué à nouveau et le texte du bouton revient à `afficher tout`.</a></li><li><a href="global.html#onSubmitAjouteun%25C3%25A9v%25C3%25A9nement%2560submit%2560auformulaireglobal:-Pr%25C3%25A9parelesdonn%25C3%25A9esvia%2560FormData%2560etlesconvertitenJSON.-Effectueunerequ%25C3%25AAteDELETEasynchronepoursupprimeruneressourcesurleserveur.-G%25C3%25A8relescasdesucc%25C3%25A8soud'erreur.">onSubmitAjoute un événement `submit` au formulaire global :- Prépare les données via `FormData` et les convertit en JSON.- Effectue une requête DELETE asynchrone pour supprimer une ressource sur le serveur.- Gère les cas de succès ou d'erreur.</a></li><li><a href="global.html#resetAjouteun%25C3%25A9v%25C3%25A9nement%2560click%2560auboutonder%25C3%25A9initialisation:-Videlechampderecherche.-Alternelavisibilit%25C3%25A9desr%25C3%25A9sultatsderecherche(%2560#searchResult%2560)etmet%25C3%25A0jourletextedubouton.">resetAjoute un événement `click` au bouton de réinitialisation :- Vide le champ de recherche.- Alterne la visibilité des résultats de recherche (`#searchResult`) et met à jour le texte du bouton.</a></li><li><a href="global.html#updateMet%25C3%25A0jourleschampsduformulaireaveclesdonn%25C3%25A9esr%25C3%25A9cup%25C3%25A9r%25C3%25A9es:-Renseigneleschamps%2560id%2560,%2560State%2560,%2560Number%2560et%2560Type%2560.-D%25C3%25A9sactiveleschamps%2560Number%2560et%2560Type%2560pour%25C3%25A9viterleurmodification.">updateMet à jour les champs du formulaire avec les données récupérées :- Renseigne les champs `id`, `State`, `Number` et `Type`.- Désactive les champs `Number` et `Type` pour éviter leur modification.</a></li></ul>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Mar 17 2025 01:19:22 GMT+0100 (heure normale d’Europe centrale)
-</footer>
-
-<script> prettyPrint(); </script>
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
 <script src="scripts/linenumber.js"> </script>
+
+
 </body>
 </html>
