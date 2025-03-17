@@ -2,7 +2,7 @@
  * Modèle Mongoose pour les utilisateurs.
  * @module models/user
  * @requires mongoose
- * @requires bcrypt
+ * @requires bcryptjs
  * 
  * @description
  * Ce modèle définit la structure des documents `User` stockés dans une collection MongoDB.

@@ -5,25 +5,27 @@ require('dotenv').config({ path: './env/.env' });
 // Création de l'application Express
 const app = express();
 
+
+
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 const store = new MongoDBStore({
     uri: process.env.URL_MONGO, // URL de connexion MongoDB
-    collection: 'sessions'     // Nom de la collection pour les sessions
+    collection: 'mySessions'   // Nom de la collection pour les sessions
 });
 
 store.on('error', (error) => {
-    console.error('Erreur dans le stockage des sessions MongoDB :', error);
+    console.error('Erreur MongoDB Store :', error);
 });
 
 app.use(session({
-    secret: process.env.SECRET_KEY,
+    secret: process.env.SECRET_KEY, // Assurez-vous que cette variable est définie
     resave: false,
     saveUninitialized: true,
-    store: store,
-    cookie: { secure: false } // Utilisez `true` avec HTTPS
+    store: store
 }));
+
 
 
 
