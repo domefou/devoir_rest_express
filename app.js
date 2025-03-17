@@ -2,11 +2,36 @@ const express = require('express');
 
 require('dotenv').config({ path: './env/.env' });
 
+// Création de l'application Express
+const app = express();
+
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const store = new MongoDBStore({
+    uri: process.env.URL_MONGO, // URL de connexion MongoDB
+    collection: 'sessions'     // Nom de la collection pour les sessions
+});
+
+store.on('error', (error) => {
+    console.error('Erreur dans le stockage des sessions MongoDB :', error);
+});
+
+app.use(session({
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+    store: store,
+    cookie: { secure: false } // Utilisez `true` avec HTTPS
+}));
+
+
+
+
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const session = require('express-session');
 
 const bodyParser = require('body-parser');
 //
@@ -40,8 +65,7 @@ const mongodb = require('./db/mongo');
 mongodb.initClientDbConnection();
 
 
-// Création de l'application Express
-const app = express();
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -55,12 +79,6 @@ app.use(methodOverride('_method'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(session({
-    secret: 'votreSecretDeSession',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // Utilisez `true` en production avec HTTPS
-}));
 
 
 
