@@ -1,5 +1,5 @@
 const Catways = require('../models/catways');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { render } = require('ejs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users')

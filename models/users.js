@@ -28,7 +28,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 //bcrypt est un module qui permet de hasher les mots de passe.
 
 //Schema est une classe qui permet de définir la structure des documents stockés dans une collection MongoDB.

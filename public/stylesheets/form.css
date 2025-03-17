@@ -60,8 +60,8 @@ legend {
 label {
     display: block;
     width: 70%;
-    height: 25px;
-    padding-top: 10px;
+    min-height: 25px;
+    padding-top: 15px;
     color: rgba(119, 77, 168, 0.997);
     margin-top: 10px;
 

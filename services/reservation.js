@@ -1,5 +1,5 @@
 const Reservations = require('../models/reservation');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const { SECRET_KEY } = process.env;
