@@ -1,48 +1,47 @@
 #!/usr/bin/env node
 
 /**
- * Module dependencies.
+ * Importation des modules nécessaires
  */
-
-var app = require('../app.js');
-var debug = require('debug')('api:server');
-var http = require('http');
+const app = require('../app'); // L'application Express
+const debug = require('debug')('api:server'); // Débogage
+const http = require('http'); // Serveur HTTP
 
 /**
- * Get port from environment and store in Express.
+ * Configuration du port
+ * - Utilise le port de l'environnement ou 3000 par défaut
  */
-
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Création du serveur HTTP
  */
-
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * Démarrage du serveur et gestion des événements
  */
-
 server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+server.on('error', onError); // Gestion des erreurs
+server.on('listening', onListening); // Confirmation de l'écoute
 
 /**
- * Normalize a port into a number, string, or false.
+ * Normalisation du port
+ * - Transforme une valeur de port en un nombre, une chaîne ou "false"
+ * @param {string|number} val - Le port à normaliser
+ * @returns {number|string|boolean} - Port normalisé ou "false"
  */
-
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  const port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe
+    // Si ce n'est pas un nombre, retournez la valeur brute (pipe nommée)
     return val;
   }
 
   if (port >= 0) {
-    // port number
+    // Si c'est un numéro de port valide, retournez-le
     return port;
   }
 
@@ -50,26 +49,26 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Gestionnaire d'événements en cas d'erreur du serveur
+ * @param {Object} error - L'objet d'erreur capturé
  */
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  const bind = typeof port === 'string'
+    ? 'Pipe ' + port // Dans le cas d'une pipe nommée
+    : 'Port ' + port; // Dans le cas d'un numéro de port
 
-  // handle specific listen errors with friendly messages
+  // Gestion des erreurs spécifiques
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      console.error(`${bind} nécessite des privilèges élevés.`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      console.error(`${bind} est déjà utilisé.`);
       process.exit(1);
       break;
     default:
@@ -78,16 +77,19 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Gestionnaire d'événements lorsque le serveur commence à écouter
  */
-
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  const addr = server.address();
+  const bind = typeof addr === 'string'
+    ? 'Pipe ' + addr
+    : 'Port ' + addr.port;
+  debug(`Écoute sur ${bind}`);
 }
 
-module.exports = server; // Exportation du serveur HTTP
+/**
+ * Exportation du serveur HTTP
+ */
+module.exports = server;
+
 
