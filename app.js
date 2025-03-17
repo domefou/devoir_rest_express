@@ -1,9 +1,18 @@
 const express = require('express');
-
-require('dotenv').config({ path: './env/.env' });
-
 // Création de l'application Express
 const app = express();
+
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
+
+const bodyParser = require('body-parser');
+//
+const methodOverride = require('method-override');
+
+// Connexion à MongoDB
+const mongodb = require('./db/mongo');
 
 
 
@@ -19,28 +28,6 @@ store.on('error', (error) => {
     console.error('Erreur MongoDB Store :', error);
 });
 
-app.use(session({
-    secret: process.env.SECRET_KEY, // Assurez-vous que cette variable est définie
-    resave: false,
-    saveUninitialized: true,
-    store: store
-}));
-
-
-
-
-
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const cors = require('cors');
-
-const bodyParser = require('body-parser');
-//
-const methodOverride = require('method-override');
-
-
-
 //route public
 const accueil = require('./routes/public/accueil');
 const login = require('./routes/public/login');
@@ -50,23 +37,27 @@ const adminMenu = require('./routes/private/admin/menu');
 const adminUsers = require('./routes/private/admin/users');
 const adminCatways = require('./routes/private/admin/catways');
 const adminReservations = require('./routes/private/admin/reservations');
-
-
-
 //route securisé user
 const userMenu = require('./routes/private/user/menu');
 const userReservations = require('./routes/private/user/reservations');
 //route deconnexion
 const logout = require('./routes/private/logout');
-
+//route reset
 const reset = require('./routes/private/reset');
 
+app.use(session({
+    secret: process.env.SECRET_KEY, // Assurez-vous que cette variable est définie
+    resave: false,
+    saveUninitialized: true,
+    store: store
+}));
 
-// Connexion à MongoDB
-const mongodb = require('./db/mongo');
+
+require('dotenv').config({ path: './env/.env' });
+
+
+
 mongodb.initClientDbConnection();
-
-
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -74,25 +65,17 @@ app.use(bodyParser.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-
 //
 app.use(methodOverride('_method'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
-
-
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cookieParser());
 //
 app.use(express.urlencoded({ extended: true }));
-
-
-
 
 
 const nocache = (req, res, next) => {
@@ -135,10 +118,6 @@ app.use('/docs', express.static(path.join(__dirname, 'docs')));
 app.use((req, res, next) => {
     res.status(404).json({ name: 'API', version: '1.0', status: 404, message: 'Not Found' });
 });
-
-
-
-
 
 
 module.exports = app;

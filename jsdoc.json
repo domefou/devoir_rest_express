@@ -19,7 +19,6 @@
     },
     "opts": {
         "destination": "./docs",
-        "template": "node_modules/better-docs",
         "recurse": true,
         "readme": "./README.md"
     }
