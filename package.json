@@ -29,8 +29,5 @@
   },
   "devDependencies": {
     "better-docs": "^2.7.3"
-  },
-  "engines": {
-    "node": "18.x"
   }
 }
