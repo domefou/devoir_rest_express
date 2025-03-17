@@ -8,11 +8,5 @@
     ],
     "env": {
         "NODE_ENV": "production"
-    },
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "bin/www.js"
-        }
-    ]
+    }
 }
