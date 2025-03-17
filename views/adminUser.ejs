@@ -1,184 +1,223 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/javascripts/admin/adminUsers.js" defer></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
+    <link rel="stylesheet" href="/stylesheets/table.css">
     <title>API port Russell</title>
 </head>
+
 <body>
-  <header>
-    <div class="navbar">
-      <ul>
-        <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
-        <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
-        <li class="navbar-li_center"><a href="/admin/reservations">Réservations</a></li>
-        <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
-      </ul>
-      <div class="identifiant">
-        <p><%= user.email %></p>
-        <p><%= user.name %></p>
-      </div>
-      <button id="logoutButton">Déconnexion</button>
-    </div>
-  </header>
+    <header>
+        <div class="navbar">
+            <ul>
+                <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
+                <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
+                <li class="navbar-li_center"><a href="/admin/reservations">Réservations</a></li>
+                <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
+            </ul>
+            <div class="identifiant">
+                <p>Le <%= formattedDate %>
+                </p>
+                <p>
+                    <%= user.email %> : <%= user.name %>
+                </p>
+            </div>
+            <button id="logoutButton">Déconnexion</button>
+        </div>
+    </header>
 
 
-<!---------------------------------------- FORMULAIRE AJOUT ET MODIFICATION -------------------------------------->
+    <!---------------------------------------- FORMULAIRE AJOUT ET MODIFICATION -------------------------------------->
 
-  <main>
-    <h1>Données utilisateurs</h1>
+    <main>
+        <h1>Données utilisateurs</h1>
 
-    <form method="post" action="/admin/user/add" id="userForm">
-        <fieldset>
-            <input type="hidden" id="method" name="_method" value="post">
-            <input type="hidden" id="id" name="_id" value="">
+        <form id="userForm">
+            <fieldset>
+                <input type="hidden" id="method" name="_method" value="post">
+                <input type="hidden" id="id" name="_id" value="">
 
-            <p>veuillez renseigner tout les champs.</p>
-            <legend>inscription</legend>
+                <p>Veuillez renseigner tout les champs.</p>
+                <legend>inscription</legend>
 
-            <label for="signup_name">Nom :</label>
-            <input type="text" id="name" name="name" placeholder="Nom" autocomplete="current-password" required>
+                <label for="signup_name">Nom :</label>
+                <input type="text" id="name" name="name" placeholder="Nom" autocomplete="current-password" required>
 
-            <label for="signup_firstname">Prénom :</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Prénom" autocomplete="current-password" required>
+                <label for="signup_firstname">Prénom :</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Prénom" autocomplete="current-password"
+                    required>
 
-            <label for="signup_email">veuillez renseigner votre adresse mail :</label>
-            <input type="email" id="email" name="email" id="signup_email" placeholder="adresse@mail.com" autocomplete="current-password" required>
+                <label for="signup_email">Veuillez renseigner votre adresse mail :</label>
+                <input type="email" id="email" name="email" id="signup_email" placeholder="adresse@mail.com"
+                    autocomplete="current-password" required>
 
-            <label for="current-password">mot de passe :</label>
-            <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password" required>
-            
-            <div class="secret_question">
-                <small>* en cas de perte du mot de passe veuillez renseigner une question secrete</small>
-                <label for="signup_question">question secrete</label>
-                <select name="question" id="question" required>
-                    <option value="" disabled selected>Choisissez une question</option>
-                    <option value="secret_color">quel est votre couleur préféré ?</option>
-                    <option value="secret_car">quel est la marque de votre premier véhicule ?</option>
-                    <option value="secret_animal">quel est le nom de votre premier animal ?</option>
-                    <option value="secret_name">quel est le nom de votre mère ?</option>
-                </select>
+                <label for="current-password">Mot de passe :</label>
+                <input type="password" name="password" id="password" placeholder="Password"
+                    autocomplete="current-password" required>
 
-                    <label for="response">inscrivez votre réponse ici</label>
+                <div class="secret_question">
+                    <small>* En cas de perte du mot de passe veuillez renseigner une question secrete</small>
+                    <label for="signup_question">Question secrete</label>
+                    <select name="question" id="question" required>
+                        <option value="" disabled selected>Choisissez une question</option>
+                        <option value="secret_color">quel est votre couleur préféré ?</option>
+                        <option value="secret_car">quel est la marque de votre premier véhicule ?</option>
+                        <option value="secret_animal">quel est le nom de votre premier animal ?</option>
+                        <option value="secret_name">quel est le nom de votre mère ?</option>
+                    </select>
+
+                    <label for="response">Inscrivez votre réponse ici</label>
                     <input type="text" name="response" id="response" placeholder="votre réponse" required>
+                </div>
+
+                <div class="btn_submit_reset">
+                    <button type="submit" id="btn_submit">Ajouter</button>
+                    <input type="reset" id="btn_reset" value="reinitialiser">
+                </div>
+
+            </fieldset>
+        </form>
+
+        <!----------------------------------------- FORMULAIRE RECHERCHE ------------------------------------------------>
+
+
+        <form id="formUsers" method="post" action="/admin/user/find">
+            <fieldset>
+                <legend> Rechercher un utilisateur :</legend>
+                <label for="searchInput">Par nom :</label>
+                <input type="text" name="name" id="searchInput">
+                <label for="searchEmail">Par email :</label>
+                <input type="text" name="email" id="searchEmail">
+                <button id="searchBtn">Rechercher</button>
+            </fieldset>
+            <div class="paramsMessage">
+                <% if (successMessage) { %>
+                    <p style="color:blue;">
+                        <%= successMessage %>
+                    </p>
+                    <% } %>
+
+                        <% if (errorMessage) { %>
+                            <p style="color:red;">
+                                <%= errorMessage %>
+                            </p>
+                            <% } %>
+
             </div>
-
-            <div class="btn_submit_reset">
-                <button type="submit" id="btn_submit">ajouter</button>
-                <input type="reset" id="btn_reset" onclick="resetForm()" value="reinitialiser">
-            </div>
-            
-        </fieldset>
-    </form>
-
-<!----------------------------------------- FORMULAIRE RECHERCHE ------------------------------------------------>
-
-
-    <form method="post" action="/admin/user/find">
-      <fieldset>
-        <legend> rechercher un catway</legend>
-        <input type="text" name="name" id="searchInput">
-        <button id="searchBtn">rechercher</button>
-      </fieldset>
-      <div class="paramsMessage">
-        <% if (successMessage) { %>
-          <p style="color:blue;"><%= successMessage %></p>
-        <% } %>
-            
-        <% if (errorMessage) { %>
-          <p style="color:red;"><%= errorMessage %></p>
-        <% } %>
-
-      </div>
-    </form>
+        </form>
 
 
 
- <!-- Premier tableau pour un seul résultat -->
+        <!-- Premier tableau pour un seul résultat -->
 
-        <button class="all">afficher tout les utilisateurs</button>
+        <button class="all">Afficher tout les utilisateurs</button>
         <button id="btnReset">Masquer la recherche</button>
-        <button id="btnAddUser">ajouter un utilisateur</button>
-    
-  <table class="usersTable">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Email</th>
-        <th>Supprimer</th>
-        <th>Modifier</th>
-      </tr>
-    </thead>
-    <tbody id="searchResult">
-      <% if (findUsers) { %>
-        <tr class="ligne" id="found">
-          <td class="usersName" data-name="<%= findUsers.name %>"><%= findUsers.name %></td>
-          <td class="usersFirstname" data-firstname="<%= findUsers.firstname %>"><%= findUsers.firstname %></td>
-          <td class="usersEmail" data-email="<%= findUsers.email %>"><%= findUsers.email %></td>
+        <button id="btnAddUser">Ajouter un utilisateur</button>
 
-          <td>
-            <button class="inputDelete" form="globalDeleteForm" data-name="<%= findUsers.name %>" data-firstname="<%= findUsers.firstname %>" data-email="<%= findUsers.email %>">Supprimer</button>
-          </td>
-          <td>
-            <button class="updateBtn">Modifier</button>
-          </td>
-        </tr>
-        <% } %>
-    </tbody>
-  </table>
+        <table class="usersTable">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Supprimer</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <tbody id="searchResult">
+                <% if (findUsers) { %>
+                    <tr class="ligne" id="found">
+                        <td class="usersId" data-id="<%= findUsers._id %>"></td>
+                        <td class="usersName" data-name="<%= findUsers.name %>">
+                            <%= findUsers.name %>
+                        </td>
+                        <td class="usersFirstname" data-firstname="<%= findUsers.firstname %>">
+                            <%= findUsers.firstname %>
+                        </td>
+                        <td class="usersEmail" data-email="<%= findUsers.email %>">
+                            <%= findUsers.email %>
+                        </td>
 
-
- <!----------------------------------------- FORMULAIRE SUPPRESSION ------------------------------------------------>   
-
-
-  <form action="/admin/user/delete" id="globalDeleteForm" method="post">
-    <input type="hidden" name="_id" id="form_id">
-    <input type="hidden" name="name" id="form_name">
-    <input type="hidden" name="firstname" id="form_firstname">
-    <input type="hidden" name="email" id="form_email">
-  </form>
+                        <td>
+                            <button class="inputDelete" type="submit" form="globalDeleteForm"
+                                data-name="<%= findUsers.name %>" data-firstname="<%= findUsers.firstname %>"
+                                data-email="<%= findUsers.email %>">Supprimer</button>
+                        </td>
+                        <td>
+                            <button class="updateBtn">Modifier</button>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
 
 
+        <!----------------------------------------- FORMULAIRE SUPPRESSION ------------------------------------------------>
 
 
-
-
-
-<!---------------------------------------Tableau pour tous les résultats------------------------------------->
-
-
-
+        <form id="globalDeleteForm">
+            <input type="hidden" name="_id" id="form_id">
+            <input type="hidden" name="name" id="form_name">
+            <input type="hidden" name="firstname" id="form_firstname">
+            <input type="hidden" name="email" id="form_email">
+        </form>
 
 
 
-    <table id="allResult" class="usersTable">
-      <% if (users.length > 0) { %>
-      <% users.forEach(users => { %>
-      <thead>
 
-      </thead>
-      <tbody>
-        <tr class="ligne" data-id="<%= users._id %>">
-          <td class="usersName" data-name="<%= users.name %>"><%= users.name %></td>
-          <td class="usersFirstname" data-firstname="<%= users.firstname %>"><%= users.firstname %></td>
-          <td class="usersEmail" data-email="<%= users.email %>"><%= users.email %></td>
-          <td>
-            <button class="inputDelete" form="globalDeleteForm" data-id="<%= users._id %>" data-name="<%= users.name %>" data-firstname="<%= users.firstname %>" data-email="<%= users.email %>">Supprimer</button>
-          </td>
-          <td>
-            <button class="updateBtn">Modifier</button></td>
-          </tr>
 
-      <% }); %>
-      <% } %>
 
-      </tbody>
-    </table>
-  </main>
-  <footer>
-  </footer>
+
+        <!---------------------------------------Tableau pour tous les résultats------------------------------------->
+
+
+
+
+
+
+        <table id="allResult" class="usersTable">
+            <% if (users.length> 0) { %>
+                <% users.forEach(users=> { %>
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        <tr class="ligne" data-id="<%= users._id %>">
+                            <td class="usersId" data-id="<%= users._id %>"></td>
+                            <td class="usersName" data-name="<%= users.name %>">
+                                <%= users.name %>
+                            </td>
+                            <td class="usersFirstname" data-firstname="<%= users.firstname %>">
+                                <%= users.firstname %>
+                            </td>
+                            <td class="usersEmail" data-email="<%= users.email %>">
+                                <%= users.email %>
+                            </td>
+                            <td>
+                                <button class="inputDelete" type="submit" form="globalDeleteForm"
+                                    data-id="<%= users._id %>" data-name="<%= users.name %>"
+                                    data-firstname="<%= users.firstname %>"
+                                    data-email="<%= users.email %>">Supprimer</button>
+                            </td>
+                            <td>
+                                <button class="updateBtn">Modifier</button>
+                            </td>
+                        </tr>
+
+                        <% }); %>
+                            <% } %>
+
+                    </tbody>
+        </table>
+    </main>
+    <footer>
+    </footer>
 </body>
+
 </html>

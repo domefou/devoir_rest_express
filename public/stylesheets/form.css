@@ -1,0 +1,141 @@
+form {
+    margin: auto;
+    max-width: 50%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgb(150, 150, 150);
+}
+
+form>a {
+    display: inline-block;
+    height: 25px;
+    margin-left: 15px;
+    color: blueviolet;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+form>a:hover {
+    color: blue;
+    text-decoration: underline;
+
+}
+
+fieldset>p {
+    width: 50%;
+    margin-top: 20px;
+    color: rgb(117, 85, 210);
+    font-style: italic;
+
+}
+
+.secret_question>small {
+    color: blueviolet;
+    font-weight: 300;
+}
+
+.secret_question {
+    margin-top: 20px;
+    border-top: 2px double blueviolet;
+    padding-top: 15px;
+}
+
+fieldset {
+
+    display: block;
+    flex-direction: column;
+    margin: 20px;
+    padding: 15px 50px;
+    border: 3px double purple;
+}
+
+legend {
+    font-size: large;
+    color: blueviolet;
+}
+
+label {
+    display: block;
+    width: 70%;
+    height: 25px;
+    padding-top: 10px;
+    color: rgba(119, 77, 168, 0.997);
+    margin-top: 10px;
+
+}
+
+input {
+    display: block;
+    box-sizing: border-box;
+    border: 2px solid blueviolet;
+    border-radius: 5px;
+    width: 70%;
+    height: 25px;
+}
+
+input:hover,
+#question:hover {
+    border-color: rgba(138, 43, 226, 0.7);
+}
+
+#question {
+    border: 2px solid blueviolet;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 70%;
+    height: 25px;
+    margin-top: 8px;
+
+}
+
+.btn_submit_reset {
+    display: flex;
+    justify-content: start;
+    width: 70%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+}
+
+#btn_submit {
+    width: 40%;
+    height: 25px;
+    margin-right: 10px;
+    background-color: rgba(138, 43, 226, 0.5);
+    border: 2px solid blueviolet;
+}
+
+#btn_submit:hover {
+    background-color: rgba(138, 43, 226, 0.7);
+    color: aliceblue;
+}
+
+#btn_reset {
+    width: 40%;
+    height: 25px;
+    border-radius: 0;
+    margin-left: 10px;
+    background-color: rgba(138, 43, 226, 0.5);
+    border: 2px solid blueviolet;
+}
+
+#btn_reset:hover {
+    background-color: rgba(138, 43, 226, 0.7);
+    color: aliceblue;
+}
+
+#searchBtn {
+    width: 40%;
+    height: 25px;
+    margin-top: 25px;
+    background-color: rgba(138, 43, 226, 0.5);
+    border: 2px solid blueviolet;
+}
+
+#searchBtn:hover {
+    background-color: rgba(138, 43, 226, 0.7);
+    color: aliceblue;
+}

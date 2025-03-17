@@ -1,391 +1,74 @@
-*{
-  margin: 0;
-  padding: 0;
+* {
+    margin: 0;
+    padding: 0;
 }
-header{
-  width: 100%;
+
+body {
+    background-color: rgba(217, 217, 217, 0.589);
 }
+
+header {
+    width: 100%;
+}
+
 main {
-  width: 1200px;
-  min-height: 900px;
-  margin: auto;
-  padding: 50px;
-  background-color: rgb(183, 144, 116);
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    border-left: double 4px blueviolet;
+    border-right: double 4px blueviolet;
+    min-height: 560px;
+    width: 1200px;
+    margin: auto;
+    padding: 50px 50px 50px 50px;
+    background-color: rgb(163, 173, 229);
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+/* text introduction */
+
+.homeText {
+    margin: auto;
+    padding: 20px;
+    border: 2px double blue;
+    text-align: center;
+    font-size: medium;
+    font-weight: 300;
+    line-height: 25px;
+    width: 550px;
+    height: auto;
+}
+
+.homeText h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+
+footer {
+    margin: auto;
+    border-top: double 4px rgb(206, 163, 247);
+    background-color: rgb(103, 103, 103);
+    min-height: 30px;
 }
 
 a {
-  color: black;
-}
-
-/*FORMULAIRE*/
-form{
-  margin: auto;
-  max-width: 50%;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 10px;
-  box-shadow: 5px 5px 15px rgb(150, 150, 150);
-}
-form>a{
-  display: inline-block;
-  height: 25px;
-  margin-left: 15px;
-  color: blueviolet;
-  text-decoration: none;
-  margin-bottom: 15px;
-}
-form>a:hover{
-  color: blue;
-  text-decoration: underline;
-
-}
-fieldset>p{
-  width: 50%;
-  margin-top: 20px;
-  color: rgb(117, 85, 210);
-  font-style: italic;
-
-}
-.secret_question>small{
-color: blueviolet;
-font-weight: 300;
-}
-.secret_question{
-  margin-top: 20px;
-  border-top: 2px double blueviolet;
-  padding-top: 15px;
-}
-fieldset{
-  
-  display: block;
-  flex-direction: column;
-  margin: 20px;
-  padding: 15px 50px;
-  border: 3px double purple;
-}
-legend{
-  font-size: large;
-  color: blueviolet;
-}
-label{
-  display: block;
-  width: 70%;
-  height: 25px;
-  padding-top: 10px;
-  color: rgba(119, 77, 168, 0.997);
-  margin-top: 10px;
-
-}
-input{
-  display: block;
-  box-sizing: border-box;
-  border: 2px solid blueviolet;
-  border-radius: 5px;
-  width: 60%;
-  height: 25px;
-}
-input:hover,
-#question:hover{
-  border-color: rgba(138, 43, 226,0.7);
-}
-#question{
-  border: 2px solid blueviolet;
-  border-radius: 5px;
-  box-sizing: border-box;
-  width: 60%;
-  height: 25px;
-  margin-top: 8px;
-
-}
-.btn_submit_reset{
-  display: flex;
-  justify-content: center;
-  margin: auto;
-  width: 70%;
-  margin-top: 40px;
-  margin-bottom: 40px;
-
-}
-#btn_submit{
-  width: 35%;
-  margin-right: 10px;
-  background-color: rgba(138, 43, 226,0.5);
-  border: 2px solid blueviolet;
-}
-#btn_submit:hover{
-  background-color: rgba(138, 43, 226,0.7);
-  color: aliceblue;
-}
-#btn_reset{
-  width: 35%;
-  margin-left: 10px;
-  background-color: rgba(138, 43, 226,0.5);
-  border: 2px solid blueviolet;
-}
-#btn_reset:hover{
-  background-color: rgba(138, 43, 226,0.7);
-  color: aliceblue;
-}
-
-/*NAVBAR*/
-
-.navbar,
-.navbar_public{
-  width: 100%;
-  height: 50px;
-  border-bottom: 3px solid blueviolet;
-  display: flex;
-  flex-direction: row;
-  align-items: end;
-  justify-content: space-between;
-  box-sizing: border-box;
-  background-color: rgba(196, 196, 196, 0.716);
-  padding: 0 25px 0 25px;
-}
-
-.navbar>ul{
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: end;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding-right: 40px;
-}
-.navbar_public>ul{
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  align-items: end;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding-right: 40px;
-}
-.navbar>ul li,
-.navbar_public>ul li{
-  width: 150px;
-  height: 30px;
-  box-sizing: border-box;
-  text-decoration: none;
-  list-style: none;
-  border-radius: 8px 8px 0 0;
-  background-color: rgba(196, 196, 196, 0.716);
-}
-.navbar-li_left a{
-  border: 1px solid rgb(120, 120, 120);
-  border-radius: 8px 0 0 0;
-  margin-right: 0.5px;
-  background-color: rgb(196, 196, 196);
-}
-.navbar-li_left a:hover{
-  background-color: rgba(223, 220, 220, 0.5);
-  border-radius: 8px 0 0 0;
-  border: 1px solid blueviolet;
-  color: blueviolet
-}
-
-.navbar-li_right a{
-  border: 1px solid rgb(120, 120, 120);
-  border-radius: 0 8px 0 0;
-  margin-left: 0.5px ;
-  background-color: rgb(196, 196, 196);
-}
-.navbar-li_right a:hover{
-  background-color: rgba(223, 220, 220, 0.5);
-  border: 1px solid blueviolet;
-  border-radius: 0 8px 0 0;
-  color: blueviolet;
-}
-.navbar-li_center a{
-  border: 1px solid rgb(120, 120, 120);
-  margin-left: 0.5px;
-  background-color: rgb(196, 196, 196);
-}
-.navbar-li_center a:hover{
-  background-color: rgba(223, 220, 220, 0.5);
-  border: 1px solid blueviolet;
-  color: blueviolet;
-}
-.navbar-li_solo a{
-  border: 1px solid rgb(120, 120, 120);
-  margin-left: 0.5px;
-  border-radius: 8px 8px 0 0;
-  background-color: rgb(196, 196, 196);
-}
-.navbar-li_solo a:hover{
-  background-color: rgba(223, 220, 220, 0.5);
-  border: 1px solid blueviolet;
-  border-radius: 8px 8px 0 0;
-  color: blueviolet;
-}
-
-.navbar>ul>li>a,
-.navbar_public>ul>li>a{
-  display: block;
-  text-align: center;
-  box-sizing: border-box;
-  align-content: center;
-  width: 100%;
-  height: 100%;
-  color: black;
-  text-decoration: none;
-}
-#logoutButton{
-  width: 150px;
-  height: 30px;
-  box-sizing: border-box;
-  text-decoration: none;
-  margin-left: 25px;
-  border-radius: 8px 8px 0 0;
-  border: 1px solid rgb(120, 120, 120);
-  background-color: rgb(196, 196, 196);
-}
-#logoutButton:hover{
-  background-color: rgba(223, 220, 220, 0.5);
-  border: 1px solid blueviolet;
-  border-radius: 8px 8px 0 0;
-  color: red;
-}
-
-footer{
-  height: 350px;
-  background-color: rgba(196, 196, 196, 0.716);
+    color: black;
 }
 
 
 
-
-/*data*/
-#deleteForm1,
-#deleteForm2{
-  display: none;
-}
-#globalDeleteForm{
-  display: none;
-}
-
-
-.usersTable,
-.catwaysTable,
-.reservationsTable{
-  margin: auto;
-  width: 100%;
-  border: 2px solid rgb(0, 2, 90);
-}
-
-
-.usersTable thead,
-.catwaysTable thead,
-.reservationsTable thead{
-  background-color: rgb(42, 61, 165);
-}
-
-.catwaysTable tbody,
-.usersTable tbody,
-.reservationsTable tbody{
-  background-color: rgba(0, 194, 253, 0.805);
-}
-
-.usersTable tfoot,
-.catwaysTable tfoot,
-.reservationsTable tfoot{
-  background-color: rgb(42, 61, 165);
-}
-
-.reservationsTable tr,
-.usersTable tr,
-.catwaysTable tr{
-  width: 100%;
-  height: 30px;
-}
-
-.reservationsTable tbody tr:hover,
-.usersTable tbody tr:hover,
-.catwaysTable tbody tr:hover{
-  background-color: rgba(0, 130, 169, 0.805);
-  color: rgb(255, 255, 255);
-}
-
-.reservationsTable th,
-.usersTable th,
-.catwaysTable th{
-  color: white;
-}
-
-.catwaysId{
-  display: none;
-}
-
-#formCatways{
-  display: none;
-}
-
-.inputDelete{
-  color: red;
-}
-
-.inputDelete,
-.updateBtn{
-  display: block;
-  height: 35px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* error*/
-
-#found{
-  background-color: rgba(108, 221, 255, 0.856);
-  color: white;
-}
-
-#found:hover{
-  background-color: rgba(0, 130, 169, 0.805);
-  color: rgb(0, 0, 0);
-}
-
-
-.usersTable td,
-.catwaysTable td,
-.usersTable th,
-.catwaysTable th{
-width: 20%;
-min-height: 100%;
-padding: 0;
-text-align: center;
-}
-
-.reservationsTable td,
-.reservationsTable th{
-  width: 14%;
-  min-height: 100%;
-  padding: 0;
-  text-align: center;
-}
-
-
-.reservationsId{
-  display: none;
-}
-#formCatways,
-#formReservations{
-  display: none;
-}
+/* errorMessage / successMessage */
 
 
 
-.paramsMessage{
-  width: 100%;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  margin-bottom: 5px;
+.paramsMessage {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 5px;
 }

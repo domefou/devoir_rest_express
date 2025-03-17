@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/reservation.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/reservation.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Reservations = require('../models/reservation');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const { SECRET_KEY } = process.env;
+
+// authenticate est une fonction qui va permettre de vérifier si un utilisateur existe et si le mot de passe est correct
+
+/**
+ * Récupère une réservation pour un catway spécifique par son numéro.
+ * @async
+ * @function getById
+ * @memberof module:reservations
+ * @param {Object} req - L'objet de la requête Express.
+ * @param {Object} req.params - Les paramètres de l'URL.
+ * @param {string} req.params.catwaysNumber - Le numéro du catway à rechercher (optionnel).
+ * @param {Object} req.body - Les données envoyées dans la requête.
+ * @param {string} req.body.catwaysNumber - Le numéro du catway à rechercher (optionnel).
+ * @param {Object} res - L'objet de la réponse Express.
+ * @param {function} next - La fonction middleware suivante.
+ * @returns {Promise&lt;void>} - Redirige vers la page de réservation avec un message de succès ou d'erreur.
+ * @throws {Error} - Retourne une erreur en cas de problème serveur.
+ * 
+ * @description
+ * Cette méthode recherche une réservation pour un catway spécifique dans la base de données en fonction du numéro de catway (`catwaysNumber`).
+ * - Si aucune réservation n'est trouvée, un message d'erreur est renvoyé et l'utilisateur est redirigé.
+ * - Si une réservation est trouvée, un message de succès est renvoyé et l'utilisateur est redirigé.
+ * - En cas d'erreur serveur, une réponse JSON appropriée est renvoyée.
+ * 
+ * Exemples de statut HTTP :
+ * - 200 : Succès (redirige l'utilisateur vers la page de réservation).
+ * - 500 : Erreur serveur lors de la recherche.
+ */
+exports.getById = async (req, res, next) => {
+    const catwaysNumber = req.params.catwaysNumber || req.body.catwaysNumber;
+    try {
+        //const catways = await Catways.find({});
+        const findReservations = await Reservations.findOne({ catwaysNumber: catwaysNumber });
+        if (!findReservations) {
+            req.session.errorMessage = `Aucune reservation pour le catway n° : ${catwaysNumber}.`;
+            return res.redirect(`/admin/reservations/${catwaysNumber}`);
+
+        }
+        if (findReservations) {
+            req.session.successMessage = `Catway n° : ${catwaysNumber} trouvé`;
+            return res.redirect(`/admin/reservations/${catwaysNumber}`);
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Erreur serveur lors de la recherche", error });
+    }
+};
+
+
+//on crée une fonction qui va ajouter un utilisateur
+/**
+ * Ajoute une nouvelle réservation pour un catway.
+ * @async
+ * @function add
+ * @memberof module:reservations
+ * @param {Object} req - L'objet de la requête Express.
+ * @param {Object} req.body - Les données envoyées dans la requête.
+ * @param {string} req.body.clientName - Nom du client effectuant la réservation.
+ * @param {string} req.body.boatName - Nom du bateau du client.
+ * @param {string} req.body.startDate - Date de début de la réservation (format ISO 8601 attendu).
+ * @param {string} req.body.endDate - Date de fin de la réservation (format ISO 8601 attendu).
+ * @param {string} req.body.catwaysNumber - Numéro du catway à réserver.
+ * @param {Object} res - L'objet de la réponse Express.
+ * @param {function} next - La fonction middleware suivante.
+ * @returns {Promise&lt;void>} - Réponse JSON avec un message de succès ou d'erreur.
+ * @throws {Error} - Retourne une erreur en cas de problème côté serveur.
+ * 
+ * @description
+ * Cette méthode vérifie si une réservation existe déjà pour le catway spécifié.
+ * - Si aucune réservation n'existe, elle crée une nouvelle réservation en fonction des données fournies.
+ * - Un message de succès ou d'erreur est retourné selon le résultat.
+ * - En cas de problème (ex. : serveur ou base de données), une erreur appropriée est renvoyée.
+ * 
+ * Exemples de statut HTTP :
+ * - 200 : Succès (réservation ajoutée ou utilisateur introuvable).
+ * - 501 : Erreur serveur lors de la création de la réservation.
+ */
+exports.add = async (req, res, next) => {
+    const clientName = req.body.clientName;
+    const boatName = req.body.boatName;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+    const catwaysNumber = req.body.catwaysNumber;
+
+
+    try {
+        // Vérifier si l'utilisateur existe
+        const reservations = await Reservations.findOne({ catwaysNumber: catwaysNumber });
+
+        if (reservations || !reservations) {
+            // Création de la réservation
+            const newReservation = await Reservations.create({
+                catwaysNumber: catwaysNumber,
+                clientName: clientName,
+                boatName: boatName,
+                startDate: startDate,
+                endDate: endDate
+            });
+
+            // Formatage des dates pour le message de succès
+            const formattedStartDate = new Date(newReservation.startDate).toISOString().split('T')[0];
+            const formattedEndDate = new Date(newReservation.endDate).toISOString().split('T')[0];
+
+            // Message de succès
+            console.log("METHOD reservation add = élément ajouté avec succès", newReservation);
+            req.session.successMessage = `Catway n° :"${newReservation.catwaysNumber}" réservé du : " ${formattedStartDate}" au : "${formattedEndDate}" avec succès.`;
+            return res.status(200).json({ message: 'catway réservé avec succés', redirectUrl: `/admin/reservations/${catwaysNumber}` });
+        } else {
+            req.session.errorMessage = `Réservation impossible, catway introuvable.`;
+            console.log('Utilisateur introuvable :', clientName);
+            return res.status(200).json({ message: 'Réservation impossible, utilisateur introuvable.', redirectUrl: `/admin/reservations` });
+        }
+    } catch (error) {
+        console.error("Erreur lors de l'ajout de la réservation :", error);
+        return res.status(501).json({ message: "Erreur serveur lors de l'ajout de la réservation.", error });
+    }
+};
+
+
+
+//on crée une fonction qui va modifier un utilisateur
+
+
+
+/**
+ * Met à jour les informations d'une réservation existante pour un catway.
+ * @async
+ * @function update
+ * @memberof module:reservations
+ * @param {Object} req - L'objet de la requête Express.
+ * @param {Object} req.body - Les données envoyées dans la requête.
+ * @param {string} req.body._id - L'ID unique de la réservation à mettre à jour.
+ * @param {string} req.body.catwaysNumber - Numéro du catway concerné.
+ * @param {string} req.body.startDate - Nouvelle date de début de la réservation (format ISO 8601 attendu).
+ * @param {string} req.body.endDate - Nouvelle date de fin de la réservation (format ISO 8601 attendu).
+ * @param {Object} res - L'objet de la réponse Express.
+ * @param {function} next - La fonction middleware suivante.
+ * @returns {Promise&lt;void>} - Réponse JSON avec un message de succès ou d'erreur.
+ * @throws {Error} - Retourne une erreur en cas de problème serveur ou de validation.
+ * 
+ * @description
+ * Cette méthode met à jour une réservation existante en fonction de l'ID fourni. 
+ * - Si la réservation existe, ses valeurs sont mises à jour avec les nouvelles données envoyées.
+ * - Si une autre réservation occupe déjà les mêmes dates pour le catway, une erreur est retournée.
+ * - En cas de succès, un message confirmant la mise à jour est renvoyé.
+ * - En cas d'erreur serveur ou si la réservation n'est pas trouvée, un message approprié est renvoyé.
+ * 
+ * Exemples de statut HTTP :
+ * - 200 : Succès (mise à jour réussie ou erreur de validation des dates).
+ * - 501 : Erreur serveur.
+ */
+exports.update = async (req, res, next) => {
+    const id = req.body._id;
+    const newReservation = req.body;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+    const catwaysNumber = req.body.catwaysNumber;
+
+    try {
+        let reservations = await Reservations.findOne({ _id: id });
+        if (reservations) {
+            Object.keys(newReservation).forEach((key) => {
+                if (!!newReservation[key]) {
+                    reservations[key] = newReservation[key];
+                }
+                else {
+                    req.session.errorMessage = 'impossible de trouvé la réservation a mettre a jour';
+                    return res.redirect(`/admin/reservations`);
+                }
+            });
+
+            if (catwaysNumber === reservations.catwaysNumber &amp;&amp; startDate === reservations.startDate &amp;&amp; endDate === reservations) {
+                req.session.errorMessage = `catway n° : ${catwaysNumber} deja occupé du : ${formattedStartDate} au : ${formattedEndDate}.`;
+                return res.status(200).json({ message: 'catway déja réservé a la date selectionné', redirectUrl: `/admin/reservations/${catwaysNumber}` });
+            }
+
+
+            await reservations.save();
+
+            const formattedStartDate = new Date(newReservation.startDate).toISOString().split('T')[0];
+            const formattedEndDate = new Date(newReservation.endDate).toISOString().split('T')[0];
+
+
+            req.session.successMessage = `réservation de : ${reservations.clientName} mis a jour avec entrée le : ${formattedStartDate} sortie le : ${formattedEndDate}`;
+            return res.status(200).json({ message: 'Réservation mis a jour avec succès', redirectUrl: `/admin/reservations/${catwaysNumber}` });
+        } else {
+            console.log('METHOD reservation update = object reservation introuvable');
+            return res.status(200).json({ message: 'object reservation introuvable', redirectUrl: `/admin/reservations` });
+        }
+    } catch (error) {
+        return res.status(501).json({ message: "METHOD reservation update = serveur introuvable", error });
+    }
+};
+
+/**
+ * Supprime une réservation existante pour un catway.
+ * @async
+ * @function delete
+ * @memberof module:reservations
+ * @param {Object} req - L'objet de la requête Express.
+ * @param {Object} req.body - Les données envoyées dans la requête.
+ * @param {string} req.body._id - L'ID unique de la réservation à supprimer.
+ * @param {Object} res - L'objet de la réponse Express.
+ * @param {function} next - La fonction middleware suivante.
+ * @returns {Promise&lt;void>} - Réponse JSON avec un message de succès ou d'erreur.
+ * @throws {Error} - Retourne une erreur en cas de problème serveur ou de suppression échouée.
+ * 
+ * @description
+ * Cette méthode supprime une réservation existante dans la base de données en fonction de son ID.
+ * - Si la réservation existe, elle est supprimée, et un message de succès est renvoyé.
+ * - Si aucune réservation n'est trouvée, un message d'erreur est retourné.
+ * - En cas de problème serveur, une réponse appropriée avec l'erreur est renvoyée.
+ * 
+ * Exemples de statut HTTP :
+ * - 200 : Succès (réservation supprimée ou non trouvée).
+ * - 501 : Erreur serveur lors de la suppression.
+ */
+exports.delete = async (req, res, next) => {
+    const id = req.body._id;
+    //const catwaysNumber = req.body.catwaysNumber;
+
+    try {
+        const reservation = await Reservations.findOne({ _id: id });
+
+        if (reservation) {
+
+            try {
+                const catwaysNumber = reservation.catwaysNumber;
+                req.session.catwaysNumber = catwaysNumber;
+
+                if (Number(catwaysNumber) === 0) {
+                    req.session.successMessage = `Catway supprimé avec succès`;
+                    await Reservations.deleteOne({ _id: id });
+                    return res.status(200).json({ message: 'Réservation supprimée avec succès', redirectUrl: `/admin/reservations` });
+                } else {
+                    req.session.successMessage = `catway n° : ${catwaysNumber} supprimé avec succès`;
+                    await Reservations.deleteOne({ _id: id });
+                    return res.status(200).json({ message: 'Réservation supprimée avec succès', redirectUrl: `/admin/reservations/${catwaysNumber}` });
+                }
+
+
+
+            } catch (error) {
+                console.log("impossible de supprimer l'objet");
+                return res.status(200).json({ message: 'impossible de supprimer l/objet', redirectUrl: `/admin/reservations` });
+
+            }
+        } else {
+            console.log("method reservation delete disfonctionnel : impossible de supprimer l'objet");
+            return res.status(200).json({ message: 'Réservation introuvable', redirectUrl: `/admin/reservations` });
+        };
+
+
+    } catch (error) {
+        return res.status(501).json({ message: "METHOD catwaysDelete = serveur introuvable", error });
+    }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-models_catways.html">models/catways</a></li><li><a href="module-models_reservations.html">models/reservations</a></li><li><a href="module-models_user.html">models/user</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Ajouteungestionnaired'%25C3%25A9v%25C3%25A9nement%2560click%2560surchaqueboutondesuppression:-Lorsqu'unboutonestcliqu%25C3%25A9,lesdonn%25C3%25A9esducatwaycorrespondantsontr%25C3%25A9cup%25C3%25A9r%25C3%25A9esetins%25C3%25A9r%25C3%25A9esdansleformulaireglobal.-Leformulaireestensuitesoumisautomatiquementpourtraiterlasuppression.">Ajoute un gestionnaire d'événement `click` sur chaque bouton de suppression :- Lorsqu'un bouton est cliqué, les données du catway correspondant sont récupérées et insérées dans le formulaire global.- Le formulaire est ensuite soumis automatiquement pour traiter la suppression.</a></li><li><a href="global.html#Ajouteungestionnaired'%25C3%25A9v%25C3%25A9nements%2560click%2560surchaqueboutondemise%25C3%25A0jour:-R%25C3%25A9cup%25C3%25A8reouconfiguredynamiquementleformulairedestin%25C3%25A9%25C3%25A0lamise%25C3%25A0jour.-Ajouteun%25C3%25A9v%25C3%25A9nement%2560submit%2560pourenvoyerlesdonn%25C3%25A9esenPUTettraiterlesretoursserveur.">Ajoute un gestionnaire d'événements `click` sur chaque bouton de mise à jour :- Récupère ou configure dynamiquement le formulaire destiné à la mise à jour.- Ajoute un événement `submit` pour envoyer les données en PUT et traiter les retours serveur.</a></li><li><a href="global.html#Gestionnaired'%25C3%25A9v%25C3%25A9nement%2560click%2560surleboutond'ajout:-Activeleformulaired'ajoutoureconfiguredynamiquementunformulaireexistantpourtraiterunerequ%25C3%25AAtePOST.-D%25C3%25A9finitungestionnaire%2560submit%2560pourenvoyerlesdonn%25C3%25A9essaisies%25C3%25A0l'endpointcorrespondant.">Gestionnaire d'événement `click` sur le bouton d'ajout :- Active le formulaire d'ajout ou reconfigure dynamiquement un formulaire existant pour traiter une requête POST.- Définit un gestionnaire `submit` pour envoyer les données saisies à l'endpoint correspondant.</a></li><li><a href="global.html#G%25C3%25A9n%25C3%25A9rationdynamiquedelalisted%25C3%25A9roulante:-Lalisted%25C3%25A9roulanteestcibl%25C3%25A9eparsonID%2560Number%2560.-Desoptionsnum%25C3%25A9rot%25C3%25A9esde1%25C3%25A024sontajout%25C3%25A9es%25C3%25A0cetteliste.-Chaqueoptionaune%2560value%2560correspondantaunum%25C3%25A9roetuntexteaffich%25C3%25A9identique.">Génération dynamique de la liste déroulante :- La liste déroulante est ciblée par son ID `Number`.- Des options numérotées de 1 à 24 sont ajoutées à cette liste.- Chaque option a une `value` correspondant au numéro et un texte affiché identique.</a></li><li><a href="global.html#formaterDateFormateunedatedonn%25C3%25A9eauformat%2560YYYY-MM-DD%2560.-Siladateestvideouinvalide,renvoieunecha%25C3%25AEnevide.">formaterDateFormate une date donnée au format `YYYY-MM-DD`.- Si la date est vide ou invalide, renvoie une chaîne vide.</a></li><li><a href="global.html#handleSortClickAjouteungestionnaireauboutonpouralternerentrelesdeuxm%25C3%25A9thodesdetri:-Basculelavariableglobale%2560sortByNumber%2560pourd%25C3%25A9terminerlam%25C3%25A9thodedetri.-Trieleslignessoitparnum%25C3%25A9rodecatway,soitpardate,enmettant%25C3%25A0jourletextedubouton.-R%25C3%25A9ins%25C3%25A8releslignestri%25C3%25A9esdansletableau.">handleSortClickAjoute un gestionnaire au bouton pour alterner entre les deux méthodes de tri :- Bascule la variable globale `sortByNumber` pour déterminer la méthode de tri.- Trie les lignes soit par numéro de catway, soit par date, en mettant à jour le texte du bouton.- Réinsère les lignes triées dans le tableau.</a></li><li><a href="global.html#listAllResultAjouteun%25C3%25A9couteurd'%25C3%25A9v%25C3%25A9nementsurleboutonetalternel'affichagedel'%25C3%25A9l%25C3%25A9mentder%25C3%25A9sultats:-Silesr%25C3%25A9sultatssontmasqu%25C3%25A9s(%2560display:'none'%2560),l'%25C3%25A9l%25C3%25A9mentpasseenmodetableau(%2560display:'table'%2560)etletexteduboutonestmis%25C3%25A0jouren%2560Masquertout%2560.-Sinon,l'%25C3%25A9l%25C3%25A9mentestmasqu%25C3%25A9%25C3%25A0nouveauetletexteduboutonrevient%25C3%25A0%2560affichertout%2560.">listAllResultAjoute un écouteur d'événement sur le bouton et alterne l'affichage de l'élément de résultats :- Si les résultats sont masqués (`display: 'none'`), l'élément passe en mode tableau (`display: 'table'`) et  le texte du bouton est mis à jour en `Masquer tout`.- Sinon, l'élément est masqué à nouveau et le texte du bouton revient à `afficher tout`.</a></li><li><a href="global.html#onSubmitAjouteun%25C3%25A9v%25C3%25A9nement%2560submit%2560auformulaireglobal:-Pr%25C3%25A9parelesdonn%25C3%25A9esvia%2560FormData%2560etlesconvertitenJSON.-Effectueunerequ%25C3%25AAteDELETEasynchronepoursupprimeruneressourcesurleserveur.-G%25C3%25A8relescasdesucc%25C3%25A8soud'erreur.">onSubmitAjoute un événement `submit` au formulaire global :- Prépare les données via `FormData` et les convertit en JSON.- Effectue une requête DELETE asynchrone pour supprimer une ressource sur le serveur.- Gère les cas de succès ou d'erreur.</a></li><li><a href="global.html#resetAjouteun%25C3%25A9v%25C3%25A9nement%2560click%2560auboutonder%25C3%25A9initialisation:-Videlechampderecherche.-Alternelavisibilit%25C3%25A9desr%25C3%25A9sultatsderecherche(%2560#searchResult%2560)etmet%25C3%25A0jourletextedubouton.">resetAjoute un événement `click` au bouton de réinitialisation :- Vide le champ de recherche.- Alterne la visibilité des résultats de recherche (`#searchResult`) et met à jour le texte du bouton.</a></li><li><a href="global.html#updateMet%25C3%25A0jourleschampsduformulaireaveclesdonn%25C3%25A9esr%25C3%25A9cup%25C3%25A9r%25C3%25A9es:-Renseigneleschamps%2560id%2560,%2560State%2560,%2560Number%2560et%2560Type%2560.-D%25C3%25A9sactiveleschamps%2560Number%2560et%2560Type%2560pour%25C3%25A9viterleurmodification.">updateMet à jour les champs du formulaire avec les données récupérées :- Renseigne les champs `id`, `State`, `Number` et `Type`.- Désactive les champs `Number` et `Type` pour éviter leur modification.</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Mar 17 2025 01:19:22 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

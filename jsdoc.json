@@ -1,0 +1,24 @@
+{
+    "source": {
+        "include": [
+            "db",
+            "models",
+            "middlewares",
+            "public",
+            "routes",
+            "services",
+            "app.js"
+        ],
+        "exclude": [
+            "node_modules",
+            ".git",
+            "bin"
+        ],
+        "includePattern": ".+\\.js$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+        "destination": "./docs",
+        "recurse": true
+    }
+}

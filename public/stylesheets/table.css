@@ -1,0 +1,139 @@
+#found {
+    background-color: rgba(138, 228, 255, 0.805);
+    color: rgb(0, 0, 0);
+}
+
+#found:hover {
+    background-color: rgba(0, 130, 169, 0.805);
+    color: rgb(0, 0, 0);
+}
+
+
+#deleteForm1,
+#deleteForm2 {
+    display: none;
+}
+
+#globalDeleteForm {
+    display: none;
+}
+
+
+.usersTable,
+.catwaysTable,
+.reservationsTable {
+    margin: auto;
+    width: 100%;
+    border: 2px solid rgb(0, 2, 90);
+}
+
+
+.usersTable thead,
+.catwaysTable thead,
+.reservationsTable thead {
+    background-color: rgb(42, 61, 165);
+}
+
+.catwaysTable tbody,
+.usersTable tbody,
+.reservationsTable tbody {
+    max-width: 100%;
+    background-color: rgba(0, 195, 255, 0.805);
+}
+
+.usersTable tfoot,
+.catwaysTable tfoot,
+.reservationsTable tfoot {
+    background-color: rgb(42, 61, 165);
+}
+
+.reservationsTable tr,
+.usersTable tr,
+.catwaysTable tr {
+    width: 100%;
+    height: 35px;
+
+}
+
+.reservationsTable tbody tr:hover,
+.usersTable tbody tr:hover,
+.catwaysTable tbody tr:hover {
+    background-color: rgba(0, 130, 169, 0.805);
+    color: rgb(255, 255, 255);
+}
+
+.reservationsTable th,
+.usersTable th,
+.catwaysTable th {
+    color: white;
+}
+
+
+
+
+.catwaysId {
+    display: none;
+}
+
+#formCatways {
+    display: none;
+}
+
+.inputDelete {
+    color: red;
+}
+
+.inputDelete,
+.updateBtn {
+    display: block;
+    height: 35px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.usersTable td,
+.usersTable th {
+    width: 20%;
+    min-height: 100%;
+    padding: 0;
+    text-align: center;
+}
+
+.catwaysTable th,
+.catwaysTable td,
+.reservationsTable td,
+.reservationsTable th {
+    width: 15%;
+    min-height: 100%;
+    padding: 0;
+    text-align: center;
+}
+
+
+.usersId,
+.reservationsId,
+.catwaysId {
+    display: none;
+}
+
+#formCatways,
+#formReservations {
+    display: none;
+}
+
+.onGoing {
+    background-color: rgb(180, 180, 0);
+    color: black;
+}
+
+.futur {
+    background-color: rgb(0, 180, 0);
+    color: black;
+}
+
+.past {
+    background-color: rgb(180, 0, 0);
+    color: black;
+}

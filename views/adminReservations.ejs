@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/javascripts/admin/adminReservations.js" defer></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
+    <link rel="stylesheet" href="/stylesheets/table.css">
     <title>API port Russell</title>
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -17,33 +22,39 @@
                 <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
             </ul>
             <div class="identifiant">
-                <p><%= user.email %></p>
-                <p><%= user.name %></p>
+                <p>Le <%= formattedDate %>
+                </p>
+                <p>
+                    <%= user.email %> : <%= user.name %>
+                </p>
             </div>
             <button id="logoutButton">Déconnexion</button>
         </div>
     </header>
-    <main>        
+    <main>
+
+
+
         <h1>Données réservations</h1>
         <form id="formReservations">
             <fieldset>
-                <legend>réservez un catway</legend>
+                <legend>Réserver un catway</legend>
 
                 <label for="Number">Sélectionner le numéro du catway :</label>
                 <select id="Number" name="catwaysNumber" required>
                     <option value="" disabled selected>choisir</option>
                 </select>
-                
-                <label for="Name">nom :</label>
+
+                <label for="Name">Nom :</label>
                 <input type="text" name="clientName" id="Name" value="" required>
 
-                <label for="Boat">nom du bateau :</label>
+                <label for="Boat">Nom du bateau :</label>
                 <input type="text" name="boatName" id="Boat" value="" required>
 
-                <label for="Start">date d'arrivé</label>
+                <label for="Start">Date d'arrivé</label>
                 <input type="date" name="startDate" id="Start" value="" required>
 
-                <label for="End">date de départ</label>
+                <label for="End">Date de départ</label>
                 <input type="date" name="endDate" id="End" value="" required>
 
                 <input type="hidden" name="_id" id="Id" value="">
@@ -51,136 +62,233 @@
                 <div class="secret_question"></div>
 
                 <div class="btn_submit_reset">
-                    <input type="submit" value="Réserver" id="btn_submit">
+                    <button type="submit" id="btn_submit">Réserver</button>
                     <input type="reset" value="Effacer" id="btn_reset">
                 </div>
             </fieldset>
         </form>
 
-    <!----------------------------------------- FORMULAIRE RECHERCHE ------------------------------------------------>
+        <!----------------------------------------- FORMULAIRE RECHERCHE ------------------------------------------------>
 
 
-    <form method="post" action="/admin/reservations/find">
-      <fieldset>
-        <legend> rechercher un catway</legend>
-        <input type="number" name="catwaysNumber" id="searchInput">
-        <button id="searchBtn">rechercher</button>
-      </fieldset>
-      <div class="paramsMessage">
-        <% if (successMessage) { %>
-          <p style="color:blue;"><%= successMessage %></p>
-        <% } %>
-            
-        <% if (errorMessage) { %>
-          <p style="color:red;"><%= errorMessage %></p>
-        <% } %>
+        <form method="post" action="/admin/reservations/find">
+            <fieldset>
+                <legend> Rechercher un catway</legend>
+                <input type="number" name="catwaysNumber" id="searchInput">
+                <button id="searchBtn">Rechercher</button>
+            </fieldset>
+            <div class="paramsMessage">
+                <% if (successMessage) { %>
+                    <p style="color:blue;">
+                        <%= successMessage %>
+                    </p>
+                    <% } %>
 
-      </div>
-      
-    </form>
-  
-  
-  
-   <!-- Premier tableau pour un seul résultat -->
-  
-          <button class="all">afficher tout les utilisateurs</button>
-          <button id="btnReset">Masquer la recherche</button>
-          <button id="btnAddReservation">ajouter une réservation</button>
-          <button id="sortButton">trier par catway</button>
+                        <% if (errorMessage) { %>
+                            <p style="color:red;">
+                                <%= errorMessage %>
+                            </p>
+                            <% } %>
 
-      
-    <table class="reservationsTable">
-      <thead>
-        <tr>
-          <th class="catwaysNumber">Numéro</th>
-          <th>Client</th>
-          <th>Nom du bateau</th>
-          <th>Date d'entrée</th>
-          <th>Date de sortie</th>
-          <th>Supprimer</th>
-          <th>Modifier</th>
-        </tr>
-      </thead>
-      <tbody id="searchResult">
+            </div>
 
-        <% if (findReservations) { %>
+        </form>
 
-            <% findReservations.forEach(reservation => { %>
-          <tr class="ligne" id="found">
-            <td class="reservationsId" data-id="<%= reservation._id %>"></td>
-            <td class="catwaysNumber" data-number="<%= reservation.catwaysNumber %>"><%= reservation.catwaysNumber %></td>
-            <td class="clientName" data-name="<%= reservation.clientName %>"><%= reservation.clientName %></td>
-            <td class="boatName" data-boat="<%= reservation.boatName %>"><%= reservation.boatName %></td>
-            <td class="startDate" data-start="<%= new Date(reservation.startDate).toISOString().split('T')[0] %>"><%= new Date(reservation.startDate).toISOString().split('T')[0] %></td>
-            <td class="endDate" data-end="<%= new Date(reservation.endDate).toISOString().split('T')[0] %>"><%= new Date(reservation.endDate).toISOString().split('T')[0] %></td>
-            <td>
-              <button type="submit" class="inputDelete" form="globalDeleteForm" data-id="<%= reservation._id %>" data-number="<%= reservation.catwaysNumber %>" data-name="<%= reservation.clientName %>" data-boat="<%= reservation.boatName %>" data-start="<%= reservation.startDate %>" data-end="<%= reservation.endDate %>">Supprimer</button>
-            </td>
-            <td>
-              <button class="updateBtn">Modifier</button>
-            </td>
-          </tr>
-          <% }); %>
-        <% } %>
-      </tbody>
-    </table>
-  
-  
-   <!----------------------------------------- FORMULAIRE SUPPRESSION ------------------------------------------------>   
-  
-  
-    <form id="globalDeleteForm">
-      <input type="hidden" name="_id" id="form_id">
-      <input type="hidden" name="catwaysNumber" id="form_catwaysNumber">
-      <input type="hidden" name="clientName" id="form_name">
-      <input type="hidden" name="boatName" id="form_boatName">
-      <input type="hidden" name="startDate" id="form_startDate">
-      <input type="hidden" name="endDate" id="form_endDate">
-    </form>
-  
-  
-  
-  
-  
-  
-  
-  <!---------------------------------------Tableau pour tous les résultats------------------------------------->
-  
-  
-  
-  
-  
-  
-      <table id="allResult" class="reservationsTable">
-        <% if (reservations.length > 0) { %>
-        <% reservations.forEach(reservation => { %>
-        <thead>
-  
-        </thead>
-        <tbody>
-            <tr class="ligne">
-              <td class="reservationsId" data-id="<%= reservation._id %>"></td>
-                <td class="catwaysNumber" data-number="<%= reservation.catwaysNumber %>"><%= reservation.catwaysNumber %></td>
-                <td class="clientName" data-name="<%= reservation.clientName %>"><%= reservation.clientName %></td>
-                <td class="boatName" data-boat="<%= reservation.boatName %>"><%= reservation.boatName %></td>
-                <td class="startDate" data-start="<%= new Date(reservation.startDate).toISOString().split('T')[0] %>"><%= new Date(reservation.startDate).toISOString().split('T')[0] %></td>
-                <td class="endDate" data-end="<%= new Date(reservation.endDate).toISOString().split('T')[0] %>"><%= new Date(reservation.endDate).toISOString().split('T')[0] %></td></td>
-                <td class="rowDelete">
-                  <button class="inputDelete" type="submit" form="globalDeleteForm" data-id="<%= reservation._id %>" data-number="<%= reservation.catwaysNumber %>" data-name="<%= reservation.clientName %>" data-boat="<%= reservation.boatName %>" data-start="<%= reservation.startDate %>" data-end="<%= reservation.endDate %>">Supprimer</button>
-                </td>
-                <td class="rowUpdate">
-                  <button class="updateBtn">Modifier</button>
-                </td>
-              </tr>
-  
-        <% }); %>
-        <% } %>
-  
-        </tbody>
-      </table>
+
+
+        <!-- Premier tableau pour un seul résultat -->
+
+        <button class="all">Afficher tout</button>
+        <button id="btnReset">Masquer la recherche</button>
+        <button id="btnAddReservation">Ajouter une réservation</button>
+        <button id="sortButton">Trier par catway</button>
+
+
+        <table class="reservationsTable">
+            <thead>
+                <tr>
+                    <th class="catwaysNumber">Numéro</th>
+                    <th>Client</th>
+                    <th>Nom du bateau</th>
+                    <th>Date d'entrée</th>
+                    <th>Date de sortie</th>
+                    <th>Supprimer</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <tbody id="searchResult">
+
+                <% if (findReservations) { %>
+
+                    <% findReservations.forEach(reservation=> { %>
+                        <tr class="ligne <%= reservation.status %>" id="found">
+                            <td class="reservationsId" data-id="<%= reservation._id %>"></td>
+                            <td class="catwaysNumber" data-number="<%= reservation.catwaysNumber %>">
+                                <%= reservation.catwaysNumber %>
+                            </td>
+                            <td class="clientName" data-name="<%= reservation.clientName %>">
+                                <%= reservation.clientName %>
+                            </td>
+                            <td class="boatName" data-boat="<%= reservation.boatName %>">
+                                <%= reservation.boatName %>
+                            </td>
+                            <td class="startDate"
+                                data-start="<%= new Date(reservation.startDate).toISOString().split('T')[0] %>">
+                                <%= new Date(reservation.startDate).toISOString().split('T')[0] %>
+                            </td>
+                            <td class="endDate"
+                                data-end="<%= new Date(reservation.endDate).toISOString().split('T')[0] %>">
+                                <%= new Date(reservation.endDate).toISOString().split('T')[0] %>
+                            </td>
+                            <td class="rowDelete">
+                                <button class="inputDelete" type="submit" form="globalDeleteForm"
+                                    data-id="<%= reservation._id %>" data-number="<%= reservation.catwaysNumber %>"
+                                    data-name="<%= reservation.clientName %>" data-boat="<%= reservation.boatName %>"
+                                    data-start="<%= reservation.startDate %>" data-end="<%= reservation.endDate %>">
+                                    Supprimer
+                                </button>
+                            </td>
+                            <td>
+                                <button class="updateBtn">Modifier</button>
+                            </td>
+                        </tr>
+                        <% }); %>
+                            <% } %>
+            </tbody>
+        </table>
+
+
+        <!----------------------------------------- FORMULAIRE SUPPRESSION ------------------------------------------------>
+
+
+        <form id="globalDeleteForm">
+            <input type="hidden" name="_id" id="form_id">
+            <input type="hidden" name="catwaysNumber" id="form_catwaysNumber">
+            <input type="hidden" name="clientName" id="form_name">
+            <input type="hidden" name="boatName" id="form_boatName">
+            <input type="hidden" name="startDate" id="form_startDate">
+            <input type="hidden" name="endDate" id="form_endDate">
+        </form>
+
+
+
+
+
+
+
+        <!---------------------------------------Tableau pour tous les résultats------------------------------------->
+
+
+
+
+
+
+        <table id="allResult" class="reservationsTable">
+            <% if (reservations.length> 0) { %>
+                <% reservations.forEach(reservation=> { %>
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        <tr class="ligne <%= reservation.status %>">
+                            <td class="reservationsId" data-id="<%= reservation._id %>"></td>
+                            <td class="catwaysNumber" data-number="<%= reservation.catwaysNumber %>">
+                                <%= reservation.catwaysNumber %>
+                            </td>
+                            <td class="clientName" data-name="<%= reservation.clientName %>">
+                                <%= reservation.clientName %>
+                            </td>
+                            <td class="boatName" data-boat="<%= reservation.boatName %>">
+                                <%= reservation.boatName %>
+                            </td>
+                            <td class="startDate"
+                                data-start="<%= new Date(reservation.startDate).toISOString().split('T')[0] %>">
+                                <%= new Date(reservation.startDate).toISOString().split('T')[0] %>
+                            </td>
+                            <td class="endDate"
+                                data-end="<%= new Date(reservation.endDate).toISOString().split('T')[0] %>">
+                                <%= new Date(reservation.endDate).toISOString().split('T')[0] %>
+                            </td>
+                            </td>
+                            <td class="rowDelete">
+                                <button class="inputDelete" type="submit" form="globalDeleteForm"
+                                    data-id="<%= reservation._id %>" data-number="<%= reservation.catwaysNumber %>"
+                                    data-name="<%= reservation.clientName %>" data-boat="<%= reservation.boatName %>"
+                                    data-start="<%= reservation.startDate %>" data-end="<%= reservation.endDate %>">
+                                    Supprimer
+                                </button>
+                            </td>
+                            <td class="rowUpdate">
+                                <button class="updateBtn">Modifier</button>
+                            </td>
+                        </tr>
+
+                        <% }); %>
+                            <% } %>
+
+                    </tbody>
+        </table>
+
+        <h2>Demande de réservation a recenser</h2>
+
+        <table class="reservationsTable">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Client</th>
+                    <th>Nom du bateau</th>
+                    <th>Date d'entrée</th>
+                    <th>Date de sortie</th>
+                    <th>Supprimer</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <% if (catwaysWaiting && catwaysWaiting.length> 0) { %>
+                <% catwaysWaiting.forEach(reservation=> { %>
+                    <tbody>
+                        <tr class="ligne <%= reservation.status %>">
+                            <td class="reservationsId" data-id="<%= reservation._id %>"></td>
+                            <td class="catwaysNumber" data-number="<%= reservation.catwaysNumber %>">Catway indefini
+                            </td>
+                            <td class="clientName" data-name="<%= reservation.clientName %>">
+                                <%= reservation.clientName %>
+                            </td>
+                            <td class="boatName" data-boat="<%= reservation.boatName %>">
+                                <%= reservation.boatName %>
+                            </td>
+                            <td class="startDate"
+                                data-start="<%= new Date(reservation.startDate).toISOString().split('T')[0] %>">
+                                <%= new Date(reservation.startDate).toISOString().split('T')[0] %>
+                            </td>
+                            <td class="endDate"
+                                data-end="<%= new Date(reservation.endDate).toISOString().split('T')[0] %>">
+                                <%= new Date(reservation.endDate).toISOString().split('T')[0] %>
+                            </td>
+                            <td class="rowDelete">
+                                <button class="inputDelete" type="submit" form="globalDeleteForm"
+                                    data-id="<%= reservation._id %>" data-number="<%= reservation.catwaysNumber %>"
+                                    data-name="<%= reservation.clientName %>" data-boat="<%= reservation.boatName %>"
+                                    data-start="<%= reservation.startDate %>" data-end="<%= reservation.endDate %>">
+                                    Supprimer
+                                </button>
+                            </td>
+                            <td class="rowUpdate">
+                                <button class="updateBtn">Modifier</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <% }); %>
+                        <% } else { %>
+                            <p>Aucune demande de réservation.</p>
+                            <% } %>
+        </table>
+
+
+
     </main>
     <footer>
-        
+
     </footer>
 </body>
+
 </html>

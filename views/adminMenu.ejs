@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
+    <link rel="stylesheet" href="/stylesheets/table.css">
     <title>adminMenu</title>
 </head>
+
 <body>
     <header>
         <div class="navbar">
@@ -16,27 +21,68 @@
                 <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
             </ul>
             <div class="identifiant">
-                <p><%= user.email %></p>
-                <p><%= user.name %></p>
+                <p>Le <%= formattedDate %>
+                </p>
+                <p>
+                    <%= user.email %> : <%= user.name %>
+                </p>
             </div>
             <button id="logoutButton">Déconnexion</button>
-            
-            
+
+
         </div>
     </header>
     <main>
-        
-        <h1>Menu admin</h1>
+        <div class="homeText">
+
+            <h2>À propos de l'application</h2>
+            <p>
+                Le Port de Plaisance de Russell a choisi d'innover avec une application web moderne pour gérer les
+                <strong>réservations de catways</strong>, petits appontements dédiés à l'amarrage des bateaux.
+                Cette solution simplifie la gestion et améliore l'efficacité au quotidien.
+            </p>
+
+            <h2>Fonctionnalités principales</h2>
+            <ul>
+                <li><strong>Réservation et gestion :</strong> Ajoutez, modifiez ou supprimez facilement les
+                    réservations.</li>
+                <li><strong>Visualisation en temps réel :</strong> Consultez l’état des catways et les informations des
+                    plaisanciers.</li>
+                <li><strong>API privée sécurisée :</strong> Garantissez la confidentialité des données avec un accès
+                    réservé.</li>
+                <li><strong>Interface intuitive :</strong> Naviguez sur une plateforme simple et efficace.</li>
+            </ul>
+
+            <h2>Pourquoi cette application ?</h2>
+            <p>
+                Cette application aide la capitainerie à réduire les erreurs manuelles, gagner du temps
+                et offrir une meilleure expérience aux plaisanciers tout en modernisant ses processus.
+                Elle est pensée pour être un atout indispensable du Port de Russell.
+            </p>
+
+            <h2>Pour qui est cette application ?</h2>
+            <ul>
+                <li><strong>Capitainerie :</strong> Supervisez les réservations et gérez les catways.</li>
+                <li><strong>Équipe technique :</strong> Consultez l'état des infrastructures et planifiez l'entretien.
+                </li>
+                <li><strong>Administrateurs :</strong> Contrôlez les informations des plaisanciers et sécurisez les
+                    accès.</li>
+            </ul>
+
+            <p><em>Prêt à commencer ? Explorez dès aujourd'hui cette plateforme conçue pour un port moderne !</em></p>
+        </div>
+
     </main>
     <footer>
-        
+        <p>&copy; 2025 Port de Plaisance de Russell. Tous droits réservés.</p>
     </footer>
     <!-- Script pour gérer la déconnexion -->
     <script>
-        document.getElementById('logoutButton').addEventListener('click', function() {
+        document.getElementById('logoutButton').addEventListener('click', function () {
             window.location.href = '/logout'; // Redirige vers la route de déconnexion
         });
 
     </script>
 </body>
+
 </html>

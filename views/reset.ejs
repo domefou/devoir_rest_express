@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
+    <link rel="stylesheet" href="/stylesheets/table.css">
     <title>API port Russell</title>
 </head>
+
 <body>
     <header>
         <div class="navbar_public">
             <ul>
-                <li class="navbar-li_left"><a href="/">retourner a l'acceuil</a></li>
-                <li class="navbar-li_right"><a href="/login">se connecter</a></li>
+                <li class="navbar-li_left"><a href="/">Retourner a l'acceuil</a></li>
+                <li class="navbar-li_right"><a href="/login">Se connecter</a></li>
             </ul>
         </div>
     </header>
@@ -21,7 +26,8 @@
             <fieldset>
                 <legend>Informations</legend>
                 <label for="signup_email">Veuillez renseigner votre adresse mail :</label>
-                <input type="email" id="signup_email" name="email" placeholder="adresse@mail.com" autocomplete="email" required>
+                <input type="email" id="signup_email" name="email" placeholder="adresse@mail.com" autocomplete="email"
+                    required>
                 <label for="signup_question">Choisissez la question utilisé lors de votre inscription</label>
                 <select name="question" id="question" required>
                     <option value="" disabled selected>questions</option>
@@ -30,33 +36,37 @@
                     <option value="secret_animal">quel est le nom de votre premier animal ?</option>
                     <option value="secret_name">quel est le nom de votre mère ?</option>
                 </select>
-                <label for="secret_response">veuillez inscrire la réponse secret utilisé lors de votre inscription :</label>
+                <label for="secret_response">Veuillez inscrire la réponse secret utilisé lors de votre inscription
+                    :</label>
                 <input type="text" name="response" id="secret_response" placeholder="votre réponse" required>
                 <label for="reset_password">Mot de passe :</label>
                 <input type="password" id="reset_password" name="password" placeholder="Mot de passe" required>
-                <small>* le mot de passe doit contenir au moins 8 caractères</small>
+                <small>* Le mot de passe doit contenir au moins 8 caractères</small>
                 <label for="confirm_password">Confirmation du mot de passe :</label>
-                <input type="password" id="confirm_password" name="confirmPassword" placeholder="Confirmer le mot de passe" required>
+                <input type="password" id="confirm_password" name="confirmPassword"
+                    placeholder="Confirmer le mot de passe" required>
 
                 <div class="btn_submit_reset">
                     <button type="submit" id="btn_submit">Réinitialiser le mot de passe</button>
                     <input type="reset" value="Effacer" id="btn_submit_reset">
                 </div>
                 <% if (errorMessage) { %>
-                    <p style="color:red;"><%= errorMessage %></p>
-                <% } %>
+                    <p style="color:red;">
+                        <%= errorMessage %>
+                    </p>
+                    <% } %>
             </fieldset>
         </form>
     </main>
     <footer>
-        
+
     </footer>
 
     <script>
-        document.getElementById('form_reset').addEventListener('submit', function(event) {
+        document.getElementById('form_reset').addEventListener('submit', function (event) {
             const password = document.getElementById('reset_password').value;
             const confirmPassword = document.getElementById('confirm_password').value;
-            
+
             if (password !== confirmPassword) {
                 event.preventDefault(); // Empêche la soumission du formulaire
                 alert('Les mots de passe ne correspondent pas. Veuillez vérifier et réessayer.');
@@ -66,4 +76,3 @@
 </body>
 
 </html>
-

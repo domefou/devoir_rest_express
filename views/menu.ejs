@@ -1,35 +1,56 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
     <title>API port Russell</title>
 </head>
+
 <body>
     <header>
         <div class="navbar">
             <ul>
-                <li class="navbar-li_solo"><a href="/user/reservation">Réserver</a></li>
+                <li class="navbar-li_solo" id="btn_user"><a href="/user/reservation">Réserver</a></li>
             </ul>
             <div class="identifiant">
-                <p><%= user.email %></p>
-                <p><%= user.name %></p>
+                <p>Le <%= formattedDate %>
+                </p>
+                <p>
+                    <%= user.email %> : <%= user.name %>
+                </p>
             </div>
-            <button id="logoutButton" >Déconnexion</button>
+
+            <button id="logoutButton">Déconnexion</button>
         </div>
     </header>
     <main>
-        <h1>menu utilisateur</h1>
+        <div class="homeText">
+            <h1>Bienvenue au port Russell.</h1>
+            <p>
+                Nous sommes ravis de vous accueillir sur notre application dédiée à la gestion des réservations de
+                catways.
+                Que vous soyez plaisancier ou membre de l'équipe du port, notre plateforme a été conçue pour simplifier
+                la gestion et l'accès aux informations essentielles.
+            </p>
+            <p>
+                N'hésitez pas à explorer nos services et à profiter d'une expérience fluide et moderne adaptée à vos
+                besoins.
+            </p>
+        </div>
+
     </main>
     <footer>
-        
+        <p>&copy; 2025 Port de Plaisance de Russell. Tous droits réservés.</p>
     </footer>
     <!-- Script pour gérer la déconnexion -->
     <script>
-        document.getElementById('logoutButton').addEventListener('click', function() {
+        document.getElementById('logoutButton').addEventListener('click', function () {
             window.location.href = '/logout'; // Redirige vers la route de déconnexion
         });
     </script>
 </body>
+
 </html>

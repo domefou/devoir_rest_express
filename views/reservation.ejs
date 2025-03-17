@@ -1,65 +1,130 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/userGen.css">
     <title>API port Russell</title>
 </head>
+
 <body>
     <header>
         <div class="navbar">
             <ul>
-                <li class="navbar-li_solo"><a href="/user/menu">Accueil</a></li>
+                <li class="navbar-li_solo" id="btn_user"><a href="/user/menu">Accueil</a></li>
             </ul>
             <div class="identifiant">
-                <p><%= user.email %></p>
-                <p><%= user.name %></p>
+                <p>Le <%= formattedDate %>
+                </p>
+                <p>
+                    <%= user.email %> : <%= user.name %>
+                </p>
             </div>
-            <button id="logoutButton" >Déconnexion</button>
+            <button id="logoutButton">Déconnexion</button>
         </div>
     </header>
     <main>
         <h1>Réservation utilisateur</h1>
-        <form method="post" action="/reservation">
+        <form id="formReservations" action="/user/reservation/add" method="post">
             <fieldset>
-                <legend>réservez un catway</legend>
-                <label for=""></label>
-                <select id="select-catway">
-                    <option value="" name="catwayNumber">Sélectionner l'emplacement</option>
-                </select>
-                <label for="name">nom :</label>
-                <input type="text" name="clientNameame" id="name">
-                <label for="boat">nom du bateau :</label>
-                <input type="text" name="boatName">
-                <label for="startDate">date d'arrivé</label>
-                <input type="date" name="startDate" id="startDate">
-                <label for="endDate">date de départ</label>
-                <input type="date" name="endDate" id="endDate">
+                <legend>Réservez un catway</legend>
+
+                <input id="Number" name="catwaysNumber" value="0">
+
+                <label for="Name">Nom :</label>
+                <input type="text" name="clientName" id="Name" value="<%= user.name %>" readonly>
+
+                <label for="Boat">Nom du bateau :</label>
+                <input type="text" name="boatName" id="Boat" value="" required>
+
+                <label for="Start">Date d'arrivé</label>
+                <input type="date" name="startDate" id="Start" value="" required>
+
+                <label for="End">Date de départ</label>
+                <input type="date" name="endDate" id="End" value="" required>
+
+                <input type="hidden" name="_id" id="Id" value="">
+
+                <div class="secret_question"></div>
 
                 <div class="btn_submit_reset">
-                    <input type="submit" value="Réserver" id="btn_submit">
+                    <button type="submit" id="btn_submit">Réserver</button>
                     <input type="reset" value="Effacer" id="btn_reset">
                 </div>
             </fieldset>
+            <div class="paramsMessage">
+                <% if (successMessage) { %>
+                    <p style="color:blue;">
+                        <%= successMessage %>
+                    </p>
+                    <% } %>
+
+                        <% if (errorMessage) { %>
+                            <p style="color:red;">
+                                <%= errorMessage %>
+                            </p>
+                            <% } %>
+
+            </div>
         </form>
+
+
+        <h2>Mes réservations</h2>
+        <table id="allResult" class="reservationsTable">
+
+            <thead>
+                <th>Nom</th>
+                <th>Nom du bateau</th>
+                <th>Date d'entrée</th>
+                <th>Date de sortie</th>
+            </thead>
+            <% if (reservations && reservations.length> 0) { %>
+                <% reservations.forEach(reservation=> { %>
+                    <tbody>
+                        <tr class="ligne <%= reservation.status %>">
+                            <td class="reservationsId" data-id="<%= reservation._id %>"></td>
+                            <td class="catwaysNumber" data-number="<%= reservation.catwaysNumber %>">
+                                <%= reservation.catwaysNumber %>
+                            </td>
+                            <td class="clientName" data-name="<%= reservation.clientName %>">
+                                <%= reservation.clientName %>
+                            </td>
+                            <td class="boatName" data-boat="<%= reservation.boatName %>">
+                                <%= reservation.boatName %>
+                            </td>
+                            <td class="startDate"
+                                data-start="<%= new Date(reservation.startDate).toISOString().split('T')[0] %>">
+                                <%= new Date(reservation.startDate).toISOString().split('T')[0] %>
+                            </td>
+                            <td class="endDate"
+                                data-end="<%= new Date(reservation.endDate).toISOString().split('T')[0] %>">
+                                <%= new Date(reservation.endDate).toISOString().split('T')[0] %>
+                            </td>
+                        </tr>
+
+
+
+                    </tbody>
+                    <% }); %>
+                        <% } else { %>
+                            <p>Aucune réservation trouvée.</p>
+                            <% } %>
+        </table>
     </main>
     <footer>
-        
+
     </footer>
     <script>
-        document.getElementById('logoutButton').addEventListener('click', function() {
+
+        document.getElementById('logoutButton').addEventListener('click', function () {
             window.location.href = '/logout'; // Redirige vers la route de déconnexion
         });
 
-        const select = document.getElementById('select-catway');
 
-        for (let i = 1; i <= 13; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            select.appendChild(option);
-        }
     </script>
 </body>
+
 </html>

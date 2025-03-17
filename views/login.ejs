@@ -1,44 +1,52 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
+    <link rel="stylesheet" href="/stylesheets/table.css">
     <title>API port Russell</title>
 </head>
+
 <body>
     <header>
         <div class="navbar_public">
             <ul>
-                <li class="navbar-li_left"><a href="/">retourner a l'acceuil</a></li>
-                <li class="navbar-li_right"><a href="/signup">s'inscrire</a></li>
+                <li class="navbar-li_left"><a href="/">Retourner a l'acceuil</a></li>
+                <li class="navbar-li_right"><a href="/signup">S'inscrire</a></li>
             </ul>
         </div>
     </header>
     <main>
-        <h1>page de connection</h1>
+        <h1>Connection</h1>
         <form action="/login" method="post">
             <fieldset>
-                <legend>connexion</legend>
-                <label for="email">veuillez renseigner votre adresse mail :</label>
+                <legend>Connexion</legend>
+                <label for="email">Veuillez renseigner votre adresse mail :</label>
                 <input type="text" id="email" name="email" placeholder="adresse@mail.com" autocomplete="email" required>
-                <label for="password">mot de passe :</label>
-                <input type="password" id="password" name="password" placeholder="mot de passe" autocomplete="current-password" required>
-                <small>* le mot de passe doit contenir au moins 8 caractères</small>
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" placeholder="mot de passe"
+                    autocomplete="current-password" required>
+                <small>* Le mot de passe doit contenir au moins 8 caractères</small>
                 <div class="btn_submit_reset">
                     <input type="submit" id="btn_submit" value="se connecter">
                     <input type="reset" id="btn_reset" value="effacer">
                 </div>
-                
+
                 <% if (errorMessage) { %>
-                <p style="color:red;"><%= errorMessage %></p>
-                <% } %>
+                    <p style="color:red;">
+                        <%= errorMessage %>
+                    </p>
+                    <% } %>
             </fieldset>
-            <a href="/reset">mot de passe oublié ?</a>
+            <a href="/reset">Mot de passe oublié ?</a>
         </form>
-        
+
     </main>
     <footer>
-        
+
     </footer>
 </body>

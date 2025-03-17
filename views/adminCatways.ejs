@@ -1,157 +1,98 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/javascripts/admin/adminCatways.js" defer></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
+    <link rel="stylesheet" href="/stylesheets/table.css">
     <title>API port Russell</title>
 </head>
+
 <body>
     <header>
-      <div class="navbar">
-        <ul>
-          <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
-          <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
-          <li class="navbar-li_center"><a href="/admin/reservations">Réservations</a></li>
-          <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
-        </ul>
-        <div class="identifiant">
-          <p><%= user.email %></p>
-          <p><%= user.name %></p>
+        <div class="navbar">
+            <ul>
+                <li class="navbar-li_left"><a href="/admin/menu">Accueil</a></li>
+                <li class="navbar-li_center"><a href="/admin/user">Utilisateurs</a></li>
+                <li class="navbar-li_center"><a href="/admin/reservations">Réservations</a></li>
+                <li class="navbar-li_right"><a href="/admin/catways">Catways</a></li>
+            </ul>
+            <div class="identifiant">
+                <p>Le <%= formattedDate %>
+                </p>
+                <p>
+                    <%= user.email %> : <%= user.name %>
+                </p>
+            </div>
+            <button id="logoutButton">Déconnexion</button>
         </div>
-        <button id="logoutButton">Déconnexion</button>
-      </div>
     </header>
-    
-
-        
-
-<!---------------------------------------- FORMULAIRE AJOUT ET MODIFICATION -------------------------------------->
-  <main>
-    <h1>Données Catways</h1>           
-
-    <form method="post" action="/admin/catways/add" id="formCatways">
-      <fieldset >
-        <legend>Ajouter un catway</legend>
-      
-        <label for="Number">Sélectionner le numéro du catway :</label>
-        <select id="Number" name="catwaysNumber" required>
-          <option value="" disabled selected>choisir</option>
-        </select>
-
-        <label for="State">entrez l'etat du catway :</label>
-        <input type="text" name="catwaysState" id="State" value="" required>
-      
-      
-        <label for="Type">type de catway :</label>
-        <select name="catwaysType" id="Type" required>
-          <option value="" disabled selected>choisir</option>
-          <option value="long">long</option>
-          <option value="short">short</option>
-        </select>
-
-        <input type="hidden" name="_id" id="id" value="">
-        <div class="secret_question"></div>
-        <div class="btn_submit_reset">
-        
-          <input type="submit" value="Envoyer" id="btn_submit">
-          <input type="reset" value="reinitialiser le formulaire">
-        </div>
-      </fieldset>
-    </form>
-      
-<!----------------------------------------- FORMULAIRE RECHERCHE ------------------------------------------------>
-      
-    <form method="post" action="/admin/catways/find">
-      <fieldset>
-        <legend> rechercher un catway</legend>
-        <input type="number" name="catwaysNumber" id="searchInput">
-        <button id="searchBtn">rechercher</button>
-      </fieldset>
-      <div class="paramsMessage">
-        <% if (successMessage) { %>
-          <p style="color:blue;"><%= successMessage %></p>
-        <% } %>
-            
-        <% if (errorMessage) { %>
-          <p style="color:red;"><%= errorMessage %></p>
-        <% } %>
-
-      </div>
-    </form>
-  
-
-    
 
 
 
 
+    <!---------------------------------------- FORMULAIRE AJOUT ET MODIFICATION -------------------------------------->
+    <main>
+        <h1>Données Catways</h1>
+
+        <form id="formCatways">
+            <fieldset>
+                <legend>Ajouter un catway</legend>
+
+                <label for="Number">Sélectionner le numéro du catway :</label>
+                <select id="Number" name="catwaysNumber" required>
+                    <option value="" disabled selected>choisir</option>
+                </select>
+
+                <label for="State">Entrez l'etat du catway :</label>
+                <input type="text" name="catwaysState" id="State" value="" required>
 
 
-<!--------------------------------------- Premier tableau pour un seul résultat ---------------------------------->
-    <button class="all">afficher tout les catways</button>
-    <button id="btnReset">Masquer la recherche</button>
-    <button id="btnAddCatway">ajouter un catway</button>
+                <label for="Type">Type de catway :</label>
+                <select name="catwaysType" id="Type" required>
+                    <option value="" disabled selected>Choisir</option>
+                    <option value="long">long</option>
+                    <option value="short">short</option>
+                </select>
 
-    <table class="catwaysTable">
-      <thead>
-        <tr>
-          <th>Numéro</th>
-          <th>Type</th>
-          <th>État</th>
-          <th>Supprimer</th>
-          <th>Modifier</th>
-        </tr>
-      </thead>
-      <tbody id="searchResult">
-        <% if (findCatways) { %>
-        <tr class="ligne" id="found">
-          <td class="catwaysNumber" data-number="<%= findCatways.catwaysNumber %>"><%= findCatways.catwaysNumber %></td>
-          <td class="catwaysType" data-type="<%= findCatways.catwaysType %>"><%= findCatways.catwaysType %></td>
-          <td class="catwaysState" data-state="<%= findCatways.catwaysState %>"><%= findCatways.catwaysState %></td>
-          <td>
-            <button class="inputDelete" form="globalDeleteForm" data-number="<%= findCatways.catwaysNumber %>" data-type="<%= findCatways.catwaysType %>" data-state="<%= findCatways.catwaysState %>">Supprimer</button>
-          </td>
-          <td>
-            <button class="updateBtn">Modifier</button>
-          </td>
-        </tr>
-        <% } %>
-      </tbody>
-    </table>
+                <input type="hidden" name="_id" id="id" value="">
+                <div class="secret_question"></div>
 
+                <div class="btn_submit_reset">
 
+                    <input type="submit" value="Envoyer" id="btn_submit">
+                    <input type="reset" value="reinitialiser le formulaire">
+                </div>
+            </fieldset>
+        </form>
 
+        <!----------------------------------------- FORMULAIRE RECHERCHE ------------------------------------------------>
 
-  <!---------------------------------------Tableau pour tous les résultats----------------------------------- -->
-            
-      
-    <table id="allResult" class="catwaysTable">
-    
-      <% if (catways.length > 0) { %>
-      <% catways.forEach(catway => { %>
-            
-      <thead>
-      </thead>
-      <tbody>
-        <tr class="ligne">
-          <td class="catwaysNumber" data-number="<%= catway.catwaysNumber %>"><%= catway.catwaysNumber %> </td>
-          <td class="catwaysType" data-type="<%= catway.catwaysType %>"> <%= catway.catwaysType %> </td>
-          <td class="catwaysState" data-state="<%= catway.catwaysState %>"> <%= catway.catwaysState %> </td>
-          <td class="delete">
-            <button class="inputDelete" form="globalDeleteForm" data-number="<%= catway.catwaysNumber %>" data-type="<%= catway.catwaysType %>" data-state="<%= catway.catwaysState %>">Supprimer</button>
-          </td>
-          <td class="update">
-            <button class="updateBtn">Modifier</button>
-          </td>
-        </tr>
-        <% }); %>
-        <% } %>
-      </tbody>
-      <tfoot>
-      </tfoot>
-    </table>
+        <form method="post" action="/admin/catways/find">
+            <fieldset>
+                <legend> Rechercher un catway</legend>
+                <input type="number" name="catwaysNumber" id="searchInput">
+                <button id="searchBtn">Rechercher</button>
+            </fieldset>
+            <div class="paramsMessage">
+                <% if (successMessage) { %>
+                    <p style="color:blue;">
+                        <%= successMessage %>
+                    </p>
+                    <% } %>
+
+                        <% if (errorMessage) { %>
+                            <p style="color:red;">
+                                <%= errorMessage %>
+                            </p>
+                            <% } %>
+
+            </div>
+        </form>
 
 
 
@@ -159,17 +100,111 @@
 
 
 
-  <!----------------------------------------- FORMULAIRE SUPPRESSION ------------------------------------------------>      
 
-    <form action="/admin/catways/delete" id="globalDeleteForm" method="post">
-      <input type="hidden" name="catwaysNumber" id="form_catwaysNumber">
-      <input type="hidden" name="catwaysState" id="form_catwaysState">
-      <input type="hidden" name="catwaysType" id="catwaysType">
-    </form>
 
-  </main>
-  <footer>
+        <!--------------------------------------- Premier tableau pour un seul résultat ---------------------------------->
+        <button class="all">Afficher tout les catways</button>
+        <button id="btnReset">Masquer la recherche</button>
+        <button id="btnAddCatway">Ajouter un catway</button>
 
-  </footer>
+        <table class="catwaysTable">
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Type</th>
+                    <th>État</th>
+                    <th>Supprimer</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <tbody id="searchResult">
+                <% if (findCatways) { %>
+                    <tr class="ligne" id="found">
+                        <td class="catwaysId" data-id="<%= findCatways._id %>"></td>
+                        <td class="catwaysNumber" data-number="<%= findCatways.catwaysNumber %>">
+                            <%= findCatways.catwaysNumber %>
+                        </td>
+                        <td class="catwaysType" data-types="<%= findCatways.catwaysType %>">
+                            <%= findCatways.catwaysType %>
+                        </td>
+                        <td class="catwaysState" data-state="<%= findCatways.catwaysState %>">
+                            <%= findCatways.catwaysState %>
+                        </td>
+                        <td>
+                            <button class="inputDelete" type="submit" form="globalDeleteForm"
+                                data-id="<%= findCatways._id %>" data-number="<%= findCatways.catwaysNumber %>"
+                                data-type="<%= findCatways.catwaysType %>"
+                                data-state="<%= findCatways.catwaysState %>">Supprimer</button>
+                        </td>
+                        <td>
+                            <button class="updateBtn">Modifier</button>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+
+
+
+
+        <!---------------------------------------Tableau pour tous les résultats----------------------------------- -->
+
+
+        <table id="allResult" class="catwaysTable">
+
+            <% if (catways.length> 0) { %>
+                <% catways.forEach(catway=> { %>
+
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr class="ligne">
+                            <td class="catwaysId" data-id="<%= catway._id %>"></td>
+                            <td class="catwaysNumber" data-number="<%= catway.catwaysNumber %>">
+                                <%= catway.catwaysNumber %>
+                            </td>
+                            <td class="catwaysType" data-types="<%= catway.catwaysType %>">
+                                <%= catway.catwaysType %>
+                            </td>
+                            <td class="catwaysState" data-state="<%= catway.catwaysState %>">
+                                <%= catway.catwaysState %>
+                            </td>
+                            <td class="delete">
+                                <button class="inputDelete" type="submit" form="globalDeleteForm"
+                                    data-id="<%= catway._id %>" data-number="<%= catway.catwaysNumber %>"
+                                    data-types="<%= catway.catwaysType %>"
+                                    data-state="<%= catway.catwaysState %>">Supprimer</button>
+                            </td>
+                            <td class="update">
+                                <button class="updateBtn">Modifier</button>
+                            </td>
+                        </tr>
+                        <% }); %>
+                            <% } %>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+        </table>
+
+
+
+
+
+
+
+        <!----------------------------------------- FORMULAIRE SUPPRESSION ------------------------------------------------>
+
+        <form id="globalDeleteForm">
+            <input type="hidden" name="_id" id="form_id">
+            <input type="hidden" name="catwaysNumber" id="form_catwaysNumber">
+            <input type="hidden" name="catwaysState" id="form_catwaysState">
+            <input type="hidden" name="catwaysType" id="form_catwaysType">
+        </form>
+
+    </main>
+    <footer>
+
+    </footer>
 </body>
+
 </html>
