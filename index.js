@@ -15,7 +15,9 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 // Création de l'application Express
-
+app.get('/', (req, res) => {
+    res.send('Bienvenue sur votre API Express déployée avec Vercel !');
+});
 
 // Initialisation de MongoDB
 const mongodb = require('./db/mongo');
