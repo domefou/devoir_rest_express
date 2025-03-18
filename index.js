@@ -15,9 +15,6 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 // Création de l'application Express
-app.get('/', (req, res) => {
-    res.send('Bienvenue sur votre API Express déployée avec Vercel !');
-});
 const favicon = require('serve-favicon');
 
 // Ajoutez cette ligne pour servir un favicon (assurez-vous d'avoir un fichier favicon.ico dans le dossier public)
