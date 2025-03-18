@@ -31,9 +31,9 @@
     "rimraf": "^6.0.1"
   },
   "engines": {
-    "node": "22.x"
+    "node": "20.x"
   },
   "devDependencies": {
-    "@types/node": "^22.13.10"
+    "@types/node": "^20.13.10"
   }
 }
