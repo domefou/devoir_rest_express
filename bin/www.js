@@ -4,7 +4,7 @@
  * Importation des modules nécessaires
  */
 const http = require('http');
-const app = require('./app.js'); // L'application Express
+const app = require('../index.js'); // L'application Express
 const debug = require('debug')('api:server'); // Débogage
 
 /**
