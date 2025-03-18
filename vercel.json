@@ -8,8 +8,32 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
-            "dest": "index.js"
+            "src": "/",
+            "dest": "routes/public/accueil.js"
+        },
+        {
+            "src": "/login",
+            "dest": "routes/public/login.js"
+        },
+        {
+            "src": "/signup",
+            "dest": "routes/public/signup.js"
+        },
+        {
+            "src": "/admin/(.*)",
+            "dest": "routes/private/admin/$1"
+        },
+        {
+            "src": "/user/(.*)",
+            "dest": "routes/private/user/$1"
+        },
+        {
+            "src": "/logout",
+            "dest": "routes/private/logout.js"
+        },
+        {
+            "src": "/reset",
+            "dest": "routes/private/reset.js"
         }
     ]
 }
