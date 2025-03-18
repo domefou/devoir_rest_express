@@ -95,11 +95,13 @@ const logout = require('./routes/private/logout');
 const reset = require('./routes/private/reset');
 
 // Utilisation des routes
-app.use('/', accueil, login, signup);
+app.use('/', accueil);
 app.use('/admin', adminUsers, adminCatways, adminReservations, adminMenu);
 app.use('/user', userMenu, userReservations);
-app.use('/', logout);
-app.use('/', reset);
+app.use('/logout', logout);
+app.use('/reset', reset);
+app.use('/login', login);
+app.use('/signup', signup);
 
 // Fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
@@ -117,8 +119,5 @@ app.use((err, req, res, next) => {
 });
 
 
-app.get('/', (req, res) => {
-    res.send('Bienvenue sur l\'API !');
-});
 
 module.exports = app;

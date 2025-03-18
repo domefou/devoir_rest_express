@@ -20,7 +20,7 @@ const service = require('../../services/users');
  * Exemples de statut HTTP :
  * - 200 : Succès (affiche la page de réinitialisation).
  */
-router.get('/reset', (req, res) => {
+router.get('/', (req, res) => {
     res.clearCookie('token'); // Supprime le cookie contenant le jeton JWT
     res.render('reset', {
         title: 'reset',
@@ -49,7 +49,7 @@ router.get('/reset', (req, res) => {
  * - 200 : Succès (mise à jour réussie du mot de passe).
  * - 500 : Erreur serveur ou problème inattendu.
  */
-router.put('/reset', async (req, res) => {
+router.put('/', async (req, res) => {
     try {
         await service.passwordUpdate(req, res);
         console.log('mise a jour du mot de passe reussi');
