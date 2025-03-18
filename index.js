@@ -18,6 +18,15 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 app.get('/', (req, res) => {
     res.send('Bienvenue sur votre API Express déployée avec Vercel !');
 });
+const favicon = require('serve-favicon');
+
+// Ajoutez cette ligne pour servir un favicon (assurez-vous d'avoir un fichier favicon.ico dans le dossier public)
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+// Si vous ne voulez pas servir de favicon, ajoutez cette route pour ignorer les requêtes favicon
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+// ...existing code...
+
 
 // Initialisation de MongoDB
 const mongodb = require('./db/mongo');
