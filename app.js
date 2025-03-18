@@ -117,18 +117,3 @@ app.use((err, req, res, next) => {
 // Exportation de l'application
 module.exports = app;
 
-
-
-/*
-admin 
-admin
-admin@mail.com
-admin0000
-
-
-
-user
-user
-user@mail.com
-user0000
-*/

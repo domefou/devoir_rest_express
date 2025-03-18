@@ -3,9 +3,11 @@
 /**
  * Importation des modules nécessaires
  */
-const app = require('../app.js'); // L'application Express
+// Serveur HTTP
+const http = require('http');
+const app = require('../app'); // L'application Express
 const debug = require('debug')('api:server'); // Débogage
-const http = require('http'); // Serveur HTTP
+
 
 /**
  * Configuration du port
