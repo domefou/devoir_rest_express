@@ -13,7 +13,7 @@ const debug = require('debug')('api:server'); // Débogage
  * Configuration du port
  * - Utilise le port de l'environnement ou 3000 par défaut
  */
-require('dotenv').config();
+require('dotenv').config({ path: '../env/.env' });
 const port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
@@ -26,7 +26,7 @@ const server = http.createServer(app);
 /**
  * Démarrage du serveur et gestion des événements
  */
-server.listen(port);
+//server.listen(port);
 server.on('error', onError); // Gestion des erreurs
 server.on('listening', onListening); // Confirmation de l'écoute
 
