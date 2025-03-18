@@ -3,20 +3,16 @@
 /**
  * Importation des modules nécessaires
  */
-// Serveur HTTP
 const http = require('http');
-const app = require('../app'); // L'application Express
+const app = require('./app.js'); // L'application Express
 const debug = require('debug')('api:server'); // Débogage
-
 
 /**
  * Configuration du port
  * - Utilise le port de l'environnement ou 3000 par défaut
  */
-require('dotenv').config({ path: '../env/.env' });
-const port = normalizePort(process.env.PORT || '4000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
 
 /**
  * Création du serveur HTTP
@@ -26,9 +22,14 @@ const server = http.createServer(app);
 /**
  * Démarrage du serveur et gestion des événements
  */
-//server.listen(port);
+server.listen(port);
 server.on('error', onError); // Gestion des erreurs
-server.on('listening', onListening); // Confirmation de l'écoute
+server.on('listening', () => {
+  console.log(`Le serveur est démarré et écoute sur le port ${port} 🚀`);
+  const addr = server.address();
+  const bind = typeof addr === 'string' ? `Pipe ${addr}` : `Port ${addr.port}`;
+  debug(`Écoute sur ${bind}`);
+});
 
 /**
  * Normalisation du port
@@ -62,8 +63,8 @@ function onError(error) {
   }
 
   const bind = typeof port === 'string'
-    ? 'Pipe ' + port // Dans le cas d'une pipe nommée
-    : 'Port ' + port; // Dans le cas d'un numéro de port
+    ? `Pipe ${port}` // Dans le cas d'une pipe nommée
+    : `Port ${port}`; // Dans le cas d'un numéro de port
 
   // Gestion des erreurs spécifiques
   switch (error.code) {
@@ -80,20 +81,5 @@ function onError(error) {
   }
 }
 
-/**
- * Gestionnaire d'événements lorsque le serveur commence à écouter
- */
-function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'Pipe ' + addr
-    : 'Port ' + addr.port;
-  debug(`Écoute sur ${bind}`);
-}
-
-/**
- * Exportation du serveur HTTP
- */
-module.exports = server;
 
 

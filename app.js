@@ -1,8 +1,10 @@
 // Charger les variables d'environnement dès le début
-require('dotenv').config({ path: './env/.env' });
+
+require('dotenv').config({ path: 'env/.env' });
 
 // Importation des modules principaux
 const express = require('express');
+const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -13,7 +15,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 // Création de l'application Express
-const app = express();
+
 
 // Initialisation de MongoDB
 const mongodb = require('./db/mongo');
@@ -91,6 +93,7 @@ const userReservations = require('./routes/private/user/reservations');
 // Autres routes
 const logout = require('./routes/private/logout');
 const reset = require('./routes/private/reset');
+const Module = require('module');
 
 // Utilisation des routes
 app.use('/', accueil, login, signup);
@@ -113,7 +116,4 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ name: 'API', version: '1.0', status: 500, message: 'Internal Server Error' });
 });
-
-// Exportation de l'application
 module.exports = app;
-

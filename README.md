@@ -42,6 +42,9 @@ PORT=3000
 JWT_SECRET=<votre_secret_jwt>
 SESSION_SECRET=<votre_secret_session>
 
+
+Serveur local:
+localhost
 Utilisez la commande suivante pour démarrer le serveur avec nodemon :
 -- npm start --
 

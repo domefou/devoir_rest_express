@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node bin/www.js"
+    "start": "node ./www.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.3",
     "bson": "^6.10.3",
     "connect": "^3.7.0",
     "connect-mongodb-session": "^5.0.0",
@@ -17,7 +18,7 @@
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "env-cmd": "^10.1.0",
-    "express": "~4.16.1",
+    "express": "^4.21.2",
     "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
