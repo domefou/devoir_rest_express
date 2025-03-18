@@ -1,15 +1,53 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "index.js",
-            "use": "@vercel/node"
-        }
-    ],
     "routes": [
         {
             "src": "/static/(.*)",
             "dest": "/public/$1"
+        },
+        {
+            "src": "/",
+            "dest": "/routes/public/accueil.js"
+        },
+        {
+            "src": "/login",
+            "dest": "/routes/public/login.js"
+        },
+        {
+            "src": "/signup",
+            "dest": "/routes/public/signup.js"
+        },
+        {
+            "src": "/reset",
+            "dest": "/routes/private/reset.js"
+        },
+        {
+            "src": "/logout",
+            "dest": "/routes/private/logout.js"
+        },
+        {
+            "src": "/user/menu",
+            "dest": "/routes/private/user/menu.js"
+        },
+        {
+            "src": "/user/reservations",
+            "dest": "/routes/private/user/reservations.js"
+        },
+        {
+            "src": "/admin/menu",
+            "dest": "/routes/private/admin/menu.js"
+        },
+        {
+            "src": "/admin/catways",
+            "dest": "/routes/private/admin/catways.js"
+        },
+        {
+            "src": "/admin/reservations",
+            "dest": "/routes/private/admin/reservations.js"
+        },
+        {
+            "src": "/admin/users",
+            "dest": "/routes/private/admin/users.js"
         },
         {
             "src": "/(.*)",
