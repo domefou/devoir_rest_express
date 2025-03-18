@@ -11,7 +11,7 @@ const http = require('http'); // Serveur HTTP
  * Configuration du port
  * - Utilise le port de l'environnement ou 3000 par défaut
  */
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**
