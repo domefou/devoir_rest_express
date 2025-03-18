@@ -79,7 +79,9 @@ function onError(error) {
     default:
       throw error;
   }
-}
+};
+
+module.exports = server;
 
 
 

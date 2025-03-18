@@ -93,7 +93,6 @@ const userReservations = require('./routes/private/user/reservations');
 // Autres routes
 const logout = require('./routes/private/logout');
 const reset = require('./routes/private/reset');
-const Module = require('module');
 
 // Utilisation des routes
 app.use('/', accueil, login, signup);
@@ -116,4 +115,10 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ name: 'API', version: '1.0', status: 500, message: 'Internal Server Error' });
 });
+
+
+app.get('/', (req, res) => {
+    res.send('Bienvenue sur l\'API !');
+});
+
 module.exports = app;

@@ -7,7 +7,7 @@
             "public",
             "routes",
             "services",
-            "app.js"
+            "index.js"
         ],
         "exclude": [
             "node_modules",
