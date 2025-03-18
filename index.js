@@ -118,6 +118,12 @@ app.use((err, req, res, next) => {
     res.status(500).json({ name: 'API', version: '1.0', status: 500, message: 'Internal Server Error' });
 });
 
-
+// Démarrage du serveur uniquement si ce fichier est exécuté directement
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Serveur démarré sur le port ${PORT}`);
+    });
+}
 
 module.exports = app;
