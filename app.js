@@ -1,5 +1,7 @@
 // Charger les variables d'environnement dès le début
 require('dotenv').config({ path: './env/.env' });
+const { SECRET_KEY } = process.env;
+const { URL_MONGO } = process.env;
 
 // Importation des modules principaux
 const express = require('express');
@@ -21,7 +23,7 @@ mongodb.initClientDbConnection();
 
 // Configuration de MongoDB Store pour les sessions
 const store = new MongoDBStore({
-    uri: process.env.URL_MONGO, // URL de connexion MongoDB
+    uri: URL_MONGO, // URL de connexion MongoDB
     collection: 'mySessions'   // Nom de la collection pour les sessions
 });
 store.on('error', (error) => {
@@ -30,7 +32,7 @@ store.on('error', (error) => {
 
 // Middleware pour les sessions
 app.use(session({
-    secret: process.env.SECRET_KEY, // Assurez-vous que cette variable est définie dans env/.env
+    secret: SECRET_KEY, // Assurez-vous que cette variable est définie dans env/.env
     resave: false,
     saveUninitialized: true,
     store: store
