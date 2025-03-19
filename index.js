@@ -26,9 +26,6 @@ app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // ...existing code...
 
-app.get('/', (req, res) => {
-    res.render('index');
-});
 
 /*
 router.get('/', async (req, res) => {
@@ -76,13 +73,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 
+
+app.use(express.static(path.join(__dirname, 'public')));
 // Configuration des vues
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Fichiers statiques
-app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/docs', express.static(path.join(__dirname, 'docs')));
+
+
+
+app.get('/', (req, res) => {
+    res.send('<h1>Bienvenue sur mon API Express déployée avec Vercel !</h1>');
+});
+
+
 
 // Middleware pour le contrôle du cache
 const nocache = (req, res, next) => {
@@ -106,6 +113,9 @@ app.use(cors({
     exposedHeaders: ['Authorization'],
     origin: '*'
 }));
+
+
+
 
 
 
