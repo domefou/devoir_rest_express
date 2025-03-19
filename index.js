@@ -18,7 +18,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const favicon = require('serve-favicon');
 
 // Ajoutez cette ligne pour servir un favicon (assurez-vous d'avoir un fichier favicon.ico dans le dossier public)
-app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Si vous ne voulez pas servir de favicon, ajoutez cette route pour ignorer les requêtes favicon
 app.get('/favicon.ico', (req, res) => res.status(204).end());
