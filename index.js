@@ -27,18 +27,9 @@ app.get('/favicon.ico', (req, res) => res.status(204).end());
 // ...existing code...
 
 
-/*
-router.get('/', async (req, res) => {
-    if (req.cookies.token) { // Vérifiez si un jeton JWT est présent
-        console.log('Jeton présent, suppression du jeton.'); // Ajout de journaux
-        res.clearCookie('token'); // Supprimez le jeton JWT
-        console.log('Jeton supprimé.'); // Ajout de journaux
-    }
-    res.render('index', {
-        title: 'index'
-    });
-});
-*/
+
+
+
 
 
 
@@ -82,13 +73,6 @@ app.set('view engine', 'ejs');
 // Fichiers statiques
 
 app.use('/docs', express.static(path.join(__dirname, 'docs')));
-
-
-
-app.get('/', (req, res) => {
-    res.send('<h1>Bienvenue sur mon API Express déployée avec Vercel !</h1>');
-});
-
 
 
 // Middleware pour le contrôle du cache
@@ -140,14 +124,16 @@ const userReservations = require('./routes/private/user/reservations');
 const logout = require('./routes/private/logout');
 const reset = require('./routes/private/reset');
 
+
 // Utilisation des routes
-app.use('/', accueil);
+
 app.use('/admin', adminUsers, adminCatways, adminReservations, adminMenu);
 app.use('/user', userMenu, userReservations);
-app.use('/', logout);
+app.use('/logout', logout);
 app.use('/reset', reset);
 app.use('/login', login);
 app.use('/signup', signup);
+app.use('/', accueil);
 
 
 
