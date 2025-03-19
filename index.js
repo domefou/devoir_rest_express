@@ -22,7 +22,28 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Si vous ne voulez pas servir de favicon, ajoutez cette route pour ignorer les requêtes favicon
 app.get('/favicon.ico', (req, res) => res.status(204).end());
+
+
 // ...existing code...
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
+/*
+router.get('/', async (req, res) => {
+    if (req.cookies.token) { // Vérifiez si un jeton JWT est présent
+        console.log('Jeton présent, suppression du jeton.'); // Ajout de journaux
+        res.clearCookie('token'); // Supprimez le jeton JWT
+        console.log('Jeton supprimé.'); // Ajout de journaux
+    }
+    res.render('index', {
+        title: 'index'
+    });
+});
+*/
+
+
 
 
 // Initialisation de MongoDB
@@ -59,6 +80,10 @@ app.use(methodOverride('_method'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Fichiers statiques
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/docs', express.static(path.join(__dirname, 'docs')));
+
 // Middleware pour le contrôle du cache
 const nocache = (req, res, next) => {
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -81,6 +106,9 @@ app.use(cors({
     exposedHeaders: ['Authorization'],
     origin: '*'
 }));
+
+
+
 
 // Déclaration des routes
 // Routes publiques
@@ -106,14 +134,12 @@ const reset = require('./routes/private/reset');
 app.use('/', accueil);
 app.use('/admin', adminUsers, adminCatways, adminReservations, adminMenu);
 app.use('/user', userMenu, userReservations);
-app.use('/logout', logout);
+app.use('/', logout);
 app.use('/reset', reset);
 app.use('/login', login);
 app.use('/signup', signup);
 
-// Fichiers statiques
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/docs', express.static(path.join(__dirname, 'docs')));
+
 
 // Gestion des erreurs 404
 app.use((req, res, next) => {

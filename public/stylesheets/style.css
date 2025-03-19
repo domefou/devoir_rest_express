@@ -12,12 +12,12 @@ header {
 }
 
 main {
-    border-left: double 4px blueviolet;
-    border-right: double 4px blueviolet;
-    min-height: 560px;
-    width: 1200px;
     margin: auto;
     padding: 50px 50px 50px 50px;
+    min-height: 500px;
+    width: 1200px;
+    border-left: double 4px blueviolet;
+    border-right: double 4px blueviolet;
     background-color: rgb(163, 173, 229);
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -46,30 +46,32 @@ h1 {
     margin-bottom: 30px;
 }
 
-
 footer {
     margin: auto;
+    padding-bottom: 25px;
+    min-height: 70px;
     border-top: double 4px rgb(206, 163, 247);
     background-color: rgb(103, 103, 103);
-    min-height: 70px;
+
 }
 
 footer ul {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-}
-
-footer li {
-    list-style-type: none;
-    width: 20%;
+    justify-content: space-around;
+    margin-top: 20px;
     height: 25px;
 }
 
-footer a {
-    width: 100%;
-    color: aliceblue;
+footer li {
+    display: block;
+    justify-content: center;
+}
+
+footer li a {
+    display: block;
     text-decoration: none;
+    color: aliceblue;
 }
 
 footer a:hover {
@@ -88,10 +90,24 @@ a {
 
 
 .paramsMessage {
-    width: 100%;
-    height: 20px;
+
     display: flex;
     justify-content: center;
     align-content: center;
     margin-bottom: 5px;
+    width: 100%;
+    height: 20px;
+}
+
+/* copyright */
+
+.copyright {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.copyright p {
+    display: block;
+    width: 70%;
 }

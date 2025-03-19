@@ -260,7 +260,8 @@ exports.passwordUpdate = async (req, res, next) => {
             if (valideResponse) {
                 console.log('passwordUpdate : Réponse correcte, mise à jour du mot de passe');
                 await user.save(password);
-                return res.redirect('/login');
+                req.session.successMessage = `Mot de passe mis a jour.`;
+                return res.status(200).json({ message: 'élément ajouté avec succès', redirectUrl: `/login` });
             } else {
                 console.log('PasswordUpdate :réponse secrète incorrecte.');
                 return res.render('reset', {

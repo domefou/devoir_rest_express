@@ -19,7 +19,7 @@ const router = express.Router();
  * Exemples de statut HTTP :
  * - 302 : Succès (redirection vers la page de connexion après déconnexion).
  */
-router.get('/', (req, res) => {
+router.get('/logout', (req, res) => {
     res.clearCookie('token'); // Supprime le cookie contenant le jeton JWT
     res.redirect('/login'); // Redirige vers la page de connexion
 });
