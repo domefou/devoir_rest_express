@@ -45,7 +45,7 @@ SESSION_SECRET=<votre_secret_session>
 
 Serveur local:
 localhost
-Utilisez la commande suivante pour démarrer le serveur avec nodemon :
+Utilisez la commande suivante pour démarrer le serveur local :
 -- npm start --
 
 
