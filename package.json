@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "start:local": "node ./bin/www.js",
-    "build": "echo 'Aucune commande de build requise'"
+    "start:local": "node ./bin/www.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
