@@ -24,16 +24,6 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 
-// ...existing code...
-
-
-
-
-
-
-
-
-
 // Initialisation de MongoDB
 const mongodb = require('./db/mongo');
 mongodb.initClientDbConnection();
@@ -99,11 +89,6 @@ app.use(cors({
 }));
 
 
-
-
-
-
-
 // Déclaration des routes
 // Routes publiques
 const accueil = require('./routes/public/accueil');
@@ -124,7 +109,6 @@ const userReservations = require('./routes/private/user/reservations');
 const logout = require('./routes/private/logout');
 const reset = require('./routes/private/reset');
 
-
 // Utilisation des routes
 
 app.use('/admin', adminUsers, adminCatways, adminReservations, adminMenu);
@@ -134,7 +118,6 @@ app.use('/reset', reset);
 app.use('/login', login);
 app.use('/signup', signup);
 app.use('/', accueil);
-
 
 
 // Gestion des erreurs 404
